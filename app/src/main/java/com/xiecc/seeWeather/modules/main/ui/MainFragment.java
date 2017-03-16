@@ -25,7 +25,7 @@ import com.amap.api.location.AMapLocationListener;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.BaseApplication;
-import com.xiecc.seeWeather.base.BaseFragment;
+import com.xiecc.seeWeather.base.AbstractBaseFragment;
 import com.xiecc.seeWeather.common.PLog;
 import com.xiecc.seeWeather.common.utils.CheckVersion;
 import com.xiecc.seeWeather.common.utils.SharedPreferenceUtil;
@@ -49,7 +49,7 @@ import rx.functions.Action1;
  * GitHub: https://github.com/xcc3641
  * Info:
  */
-public class MainFragment extends BaseFragment implements AMapLocationListener {
+public class MainFragment extends AbstractBaseFragment implements AMapLocationListener {
 
     @Bind(R.id.recyclerview)
     RecyclerView mRecyclerView;

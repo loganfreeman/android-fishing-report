@@ -13,7 +13,7 @@ import com.trello.rxlifecycle.components.support.RxFragment;
  * GitHub: https://github.com/xcc3641
  * Info:
  */
-public abstract class BaseFragment extends RxFragment {
+public abstract class AbstractBaseFragment extends RxFragment {
 
     protected boolean mIsCreateView = false;
 

@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import com.litesuits.orm.db.assit.WhereBuilder;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import com.xiecc.seeWeather.R;
-import com.xiecc.seeWeather.base.BaseFragment;
+import com.xiecc.seeWeather.base.AbstractBaseFragment;
 import com.xiecc.seeWeather.base.C;
 import com.xiecc.seeWeather.common.utils.RxUtils;
 import com.xiecc.seeWeather.common.utils.SimpleSubscriber;
@@ -41,7 +41,7 @@ import rx.Observer;
  * GitHub: https://github.com/xcc3641
  * Info:
  */
-public class MultiCityFragment extends BaseFragment {
+public class MultiCityFragment extends AbstractBaseFragment {
 
     @Bind(R.id.recyclerview)
     RecyclerView mRecyclerView;

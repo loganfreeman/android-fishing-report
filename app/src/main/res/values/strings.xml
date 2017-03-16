@@ -31,6 +31,7 @@
     在开源的过程中，收到了很多来自有趣的你们的邮件。\n我也曾遇到过棘手的问题无处咨询又谷歌不到。那个时候的我，也可能是现在的你。所以我希望能够帮助到你。</string>
     <string name="open_source">• RxJava: github.com/ReactiveX/RxJava\n• RxAndroid: github.com/ReactiveX/RxAndroid\n• Retrofit: github.com/square/retrofit\n• Glide: github.com/bumptech/glide\n• YujunZhu 设计师提供多城市卡片设计\n• 和风天气提供数据支持\n• 高德定位提供位置定位服务</string>
     <string name="bugTableUrl">https://www.wenjuan.com/s/YbqANfc/</string>
+    <string name="about_fishing_report">鱼情报告软件，作者Peter Nelson</string>
     <string-array name="icons">
         <item>图标一</item>
         <item>图标二</item>

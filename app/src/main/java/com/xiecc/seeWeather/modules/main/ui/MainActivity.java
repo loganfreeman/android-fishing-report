@@ -102,8 +102,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void initView() {
         setSupportActionBar(mToolbar);
         HomePagerAdapter mHomePagerAdapter = new HomePagerAdapter(getSupportFragmentManager());
-        mHomePagerAdapter.addTab(new MainFragment(), "主页面");
-        mHomePagerAdapter.addTab(new MultiCityFragment(), "多城市");
+        mHomePagerAdapter.addTab(new MainFragment(), "天气");
+        mHomePagerAdapter.addTab(new FishingReportFragment(), "鱼情报告");
         mViewPager.setAdapter(mHomePagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager, false);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -122,10 +122,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             mFab.setImageResource(R.drawable.ic_add_24dp);
                             mFab.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary)));
                             mFab.setOnClickListener(v -> {
-                                Intent intent = new Intent(MainActivity.this, ChoiceCityActivity.class);
-                                intent.putExtra(C.MULTI_CHECK, true);
-                                CircularAnimUtil.startActivity(MainActivity.this, intent, mFab,
-                                        R.color.colorPrimary);
+                                ToastUtil.showShort("鱼情报告，作者Peter Nelson");
                             });
                         } else {
                             mFab.setImageResource(R.drawable.ic_favorite);
