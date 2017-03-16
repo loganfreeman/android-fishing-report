@@ -15,6 +15,7 @@ android {
         versionCode app.versionCode
         versionName app.versionName
         resConfigs "zh"
+
     }
     buildTypes {
         release {

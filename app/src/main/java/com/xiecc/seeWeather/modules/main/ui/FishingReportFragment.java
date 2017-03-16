@@ -8,11 +8,15 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.AbstractBaseFragment;
+import com.xiecc.seeWeather.common.utils.ToastUtil;
 import com.xiecc.seeWeather.modules.fishing.domain.WaterBody;
 
 import org.jsoup.Jsoup;
@@ -34,9 +38,6 @@ import java.util.regex.Pattern;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-import javax.script.*;
-
-import static android.media.CamcorderProfile.get;
 
 /**
  * Created by scheng on 3/15/17.
@@ -46,8 +47,12 @@ public class FishingReportFragment extends AbstractBaseFragment {
 
     public static final String UTAH_WILDLIFE_HOTSPOTS = "https://wildlife.utah.gov/hotspots/";
 
-    @Bind(R.id.text_hotspots)
-    public TextView hotspotsTextView;
+    @Bind(R.id.listview)
+    ListView listview;
+
+    ArrayAdapter<String> adapter;
+
+
 
     ProgressDialog mProgressDialog;
 
@@ -88,7 +93,14 @@ public class FishingReportFragment extends AbstractBaseFragment {
 
 
     private void initView() {
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String string = adapter.getItem(position);
+                ToastUtil.showShort(string);
 
+            }
+        });
     }
 
 
@@ -177,7 +189,10 @@ public class FishingReportFragment extends AbstractBaseFragment {
         @Override
         protected void onPostExecute(Void result) {
             if(hotSpots != null) {
-
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_list_item_1, WaterBody.toStringArray(hotSpots));
+                listview.setAdapter(adapter);
+                FishingReportFragment.this.adapter = adapter;
             }
             mProgressDialog.dismiss();
         }
