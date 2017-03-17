@@ -56,7 +56,6 @@ public class FishingReportFragment extends AbstractBaseFragment {
 
     ProgressDialog mProgressDialog;
 
-    Pattern r = Pattern.compile("(var\\s*waterbody[^;]*;(?=\\s))", Pattern.DOTALL);
 
     private View view;
     @Override
@@ -105,41 +104,6 @@ public class FishingReportFragment extends AbstractBaseFragment {
 
 
 
-    private List<WaterBody> getHotspots(String html) {
-
-        List<WaterBody> waterBodies = new ArrayList<WaterBody>();
-
-        Context rhino = Context.enter();
-
-        // Turn off optimization to make Rhino Android compatible
-        rhino.setOptimizationLevel(-1);
-        try {
-            Scriptable scope = rhino.initStandardObjects();
-
-            // Note the forth argument is 1, which means the JavaScript source has
-            // been compressed to only one line using something like YUI
-            rhino.evaluateString(scope, html, "JavaScript", 1, null);
-
-            // Get the variable waterbody defined in JavaScriptCode
-            Object obj = scope.get("waterbody", scope);
-            if (obj instanceof NativeArray) {
-                NativeArray array = (NativeArray) obj;
-                long len = array.getLength();
-                for(int i = 0; i< len; i++) {
-                    Object item = array.get(i);
-                    if(item instanceof NativeArray) {
-                        waterBodies.add(WaterBody.fromV8Array((NativeArray) item));
-                    }
-                }
-            }
-
-        } finally {
-            Context.exit();
-        }
-
-        return waterBodies;
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -148,7 +112,6 @@ public class FishingReportFragment extends AbstractBaseFragment {
 
     private class HotSpots extends AsyncTask<Void, Void, Void> {
 
-        String text = null;
         List<WaterBody> hotSpots = null;
 
         @Override
@@ -164,25 +127,8 @@ public class FishingReportFragment extends AbstractBaseFragment {
         @Override
         protected Void doInBackground(Void... params) {
 
-            try {
-                // Connect to the web site
-                Document document = Jsoup.connect(UTAH_WILDLIFE_HOTSPOTS).get();
-                Elements elements = document.select("script");
-                for(Element script : elements) {
-                    String html = script.html();
-                    Matcher m = r.matcher(html);
-                    if(m.find()) {
-                        text = m.group(1);
-                        if(text != null) {
-                            hotSpots = getHotspots(text);
-                            break;
-                        }
-                    }
-                }
+            hotSpots = WaterBody.fromWildlife();
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             return null;
         }
 
