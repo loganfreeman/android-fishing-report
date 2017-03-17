@@ -35,26 +35,18 @@
         </android.support.design.widget.AppBarLayout>
 
 
-        <RelativeLayout
+        <FrameLayout
+            android:id="@+id/contentContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="match_parent"/>
 
-            <!-- This could be your fragment container, or something -->
-            <FrameLayout
-                android:id="@+id/contentContainer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/bottomBar" />
-
-            <com.roughike.bottombar.BottomBar
-                android:id="@+id/bottomBar"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_alignParentBottom="true"
-                app:bb_tabXmlResource="@xml/bottombar_tabs_three" />
-
-        </RelativeLayout>
+        <com.roughike.bottombar.BottomBar
+            android:id="@+id/bottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            app:bb_tabXmlResource="@xml/bottombar_tabs_three"
+            app:bb_behavior="shy"/>
 
 
     </android.support.design.widget.CoordinatorLayout>
