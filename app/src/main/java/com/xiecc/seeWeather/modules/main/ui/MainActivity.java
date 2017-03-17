@@ -22,12 +22,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.BaseActivity;
-import com.xiecc.seeWeather.base.C;
 import com.xiecc.seeWeather.common.PLog;
 import com.xiecc.seeWeather.common.utils.*;
 import com.xiecc.seeWeather.modules.about.ui.AboutActivity;
 import com.xiecc.seeWeather.modules.city.ui.ChoiceCityActivity;
-import com.xiecc.seeWeather.modules.fishing.domain.WaterBody;
 import com.xiecc.seeWeather.modules.main.adapter.HomePagerAdapter;
 import com.xiecc.seeWeather.modules.service.AutoUpdateService;
 import com.xiecc.seeWeather.modules.setting.ui.SettingActivity;
@@ -104,7 +102,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void initView() {
         setSupportActionBar(mToolbar);
         HomePagerAdapter mHomePagerAdapter = new HomePagerAdapter(getSupportFragmentManager());
-        mHomePagerAdapter.addTab(new MainFragment(), "天气");
+        mHomePagerAdapter.addTab(new WeatherFragment(), "天气");
         mHomePagerAdapter.addTab(new FishingReportFragment(), "鱼情报告");
         mViewPager.setAdapter(mHomePagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager, false);

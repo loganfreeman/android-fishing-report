@@ -49,7 +49,7 @@ import rx.functions.Action1;
  * GitHub: https://github.com/xcc3641
  * Info:
  */
-public class MainFragment extends AbstractBaseFragment implements AMapLocationListener {
+public class WeatherFragment extends AbstractBaseFragment implements AMapLocationListener {
 
     @Bind(R.id.recyclerview)
     RecyclerView mRecyclerView;

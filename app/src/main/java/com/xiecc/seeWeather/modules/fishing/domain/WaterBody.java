@@ -19,6 +19,8 @@ import java.util.regex.Pattern;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.subjects.AsyncSubject;
+import rx.subjects.PublishSubject;
 
 /**
  * Created by scheng on 3/15/17.
@@ -34,6 +36,8 @@ public class WaterBody implements Serializable {
     public String href;
 
     public static final Pattern r = Pattern.compile("(var\\s*waterbody[^;]*;(?=\\s))", Pattern.DOTALL);
+
+    private static final AsyncSubject<List<WaterBody>> mSubject = AsyncSubject.create();
 
     public static final String UTAH_WILDLIFE_HOTSPOTS = "https://wildlife.utah.gov/hotspots/";
 
@@ -125,6 +129,13 @@ public class WaterBody implements Serializable {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static Observable<List<WaterBody>> getWaterbodiesAsync2() {
+        Observable<List<WaterBody>> firstTimeObservable =
+                Observable.fromCallable(WaterBody::fromWildlife);
+
+        return firstTimeObservable.concatWith(mSubject);
     }
 
     public static Observable<List<WaterBody>> getWaterbodiesAsync() {

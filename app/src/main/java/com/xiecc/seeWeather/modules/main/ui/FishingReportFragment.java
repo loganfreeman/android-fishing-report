@@ -37,6 +37,10 @@ import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observer;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -45,7 +49,6 @@ import butterknife.ButterKnife;
 
 public class FishingReportFragment extends AbstractBaseFragment {
 
-    public static final String UTAH_WILDLIFE_HOTSPOTS = "https://wildlife.utah.gov/hotspots/";
 
     @Bind(R.id.listview)
     ListView listview;
@@ -86,7 +89,27 @@ public class FishingReportFragment extends AbstractBaseFragment {
     }
 
     private void load() {
-        new HotSpots().execute();
+        WaterBody.getWaterbodiesAsync2()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<List<WaterBody>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(List<WaterBody> waterBodies) {
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_list_item_1, WaterBody.toStringArray(waterBodies));
+                listview.setAdapter(adapter);
+                FishingReportFragment.this.adapter = adapter;
+            }
+        });
     }
 
 
