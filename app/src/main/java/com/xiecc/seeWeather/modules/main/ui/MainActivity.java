@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -20,6 +21,9 @@ import android.view.MenuItem;
 import android.view.animation.DecelerateInterpolator;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabSelectListener;
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.BaseActivity;
 import com.xiecc.seeWeather.common.PLog;
@@ -31,20 +35,22 @@ import com.xiecc.seeWeather.modules.service.AutoUpdateService;
 import com.xiecc.seeWeather.modules.setting.ui.SettingActivity;
 import rx.android.schedulers.AndroidSchedulers;
 
+import static com.xiecc.seeWeather.R.id.bottomBar;
+
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @Bind(R.id.viewPager)
-    ViewPager mViewPager;
+
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.tabLayout)
-    TabLayout mTabLayout;
-    @Bind(R.id.fab)
-    FloatingActionButton mFab;
+
     @Bind(R.id.nav_view)
     NavigationView mNavView;
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
+
+    @Bind(R.id.bottomBar)
+    BottomBar mBottomBar;
+
 
 
     @Override
@@ -101,50 +107,34 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      */
     private void initView() {
         setSupportActionBar(mToolbar);
-        HomePagerAdapter mHomePagerAdapter = new HomePagerAdapter(getSupportFragmentManager());
-        mHomePagerAdapter.addTab(new WeatherFragment(), "天气");
-        mHomePagerAdapter.addTab(new FishingReportFragment(), "鱼情报告");
-        mViewPager.setAdapter(mHomePagerAdapter);
-        mTabLayout.setupWithViewPager(mViewPager, false);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+        mBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-                mFab.post(() -> mFab.hide(new FloatingActionButton.OnVisibilityChangedListener() {
-                    @Override
-                    public void onHidden(FloatingActionButton fab) {
-                        if (position == 1) {
-                            mFab.setImageResource(R.drawable.ic_add_24dp);
-                            mFab.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary)));
-                            mFab.setOnClickListener(v -> {
-                                ToastUtil.showShort("鱼情报告，作者Peter Nelson");
-                            });
-                        } else {
-                            mFab.setImageResource(R.drawable.ic_favorite);
-                            mFab.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(MainActivity.this, R.color.colorAccent)));
-                            mFab.setOnClickListener(v -> showFabDialog());
-                        }
-                        fab.show();
-                    }
-                }));
-                if (!mFab.isShown()) {
-                    mFab.show();
+            public void onTabSelected(@IdRes int tabId) {
+                if (tabId == R.id.tab_weather) {
+                    // The tab with id R.id.tab_favorites was selected,
+                    // change your content accordingly.
                 }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
+                switch(tabId) {
+                    case R.id.tab_weather:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.contentContainer, new WeatherFragment()).commit();
+                        break;
+                    case R.id.tab_map:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.contentContainer, new FishingMapFragment()).commit();
+                        break;
+                    case R.id.tab_report:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.contentContainer, new FishingReportFragment()).commit();
+                        break;
+                    default:
+                        break;
+                }
             }
         });
 
-        //mFab
-        mFab.setOnClickListener(v -> showFabDialog());
+        mBottomBar.setDefaultTab(R.id.tab_weather);
     }
 
     /**
@@ -235,9 +225,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             case R.id.nav_city:
                                 ChoiceCityActivity.launch(MainActivity.this);
                                 break;
-                            case R.id.nav_multi_cities:
-                                mViewPager.setCurrentItem(1);
-                                break;
+
                         }
                     }
                 });
@@ -259,13 +247,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     protected boolean mIsHidden = false;
 
-    public void hideOrShowToolbar() {
-        mTabLayout.animate()
-                .translationY(mIsHidden ? 0 : -mTabLayout.getHeight())
-                .setInterpolator(new DecelerateInterpolator(2))
-                .start();
-        mIsHidden = !mIsHidden;
-    }
 
     @Override
     protected void onDestroy() {

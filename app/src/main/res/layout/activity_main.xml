@@ -15,27 +15,47 @@
         android:layout_height="match_parent"
         >
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewPager"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            >
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:tabIndicatorColor="@android:color/white"
+                app:tabIndicatorHeight="4dp"/>
+
+        </android.support.design.widget.AppBarLayout>
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/part_tablayout"/>
+            <!-- This could be your fragment container, or something -->
+            <FrameLayout
+                android:id="@+id/contentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/bottomBar" />
 
+            <com.roughike.bottombar.BottomBar
+                android:id="@+id/bottomBar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentBottom="true"
+                app:bb_tabXmlResource="@xml/bottombar_tabs_three" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_favorite"
-            app:borderWidth="0dp"
-            app:layout_anchor="@id/viewPager"
-            app:layout_anchorGravity="end|bottom"
-            app:layout_behavior="com.xiecc.seeWeather.modules.main.listener.FloatingActionButtonScrollBehavior"/>
+        </RelativeLayout>
+
 
     </android.support.design.widget.CoordinatorLayout>
 
