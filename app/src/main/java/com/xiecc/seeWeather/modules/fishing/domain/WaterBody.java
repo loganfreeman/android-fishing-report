@@ -1,6 +1,5 @@
 package com.xiecc.seeWeather.modules.fishing.domain;
 
-import com.xiecc.seeWeather.modules.main.ui.FishingReportFragment;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,7 +17,8 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.xiecc.seeWeather.modules.main.ui.FishingReportFragment.UTAH_WILDLIFE_HOTSPOTS;
+import rx.Observable;
+import rx.Subscriber;
 
 /**
  * Created by scheng on 3/15/17.
@@ -34,6 +34,8 @@ public class WaterBody implements Serializable {
     public String href;
 
     public static final Pattern r = Pattern.compile("(var\\s*waterbody[^;]*;(?=\\s))", Pattern.DOTALL);
+
+    public static final String UTAH_WILDLIFE_HOTSPOTS = "https://wildlife.utah.gov/hotspots/";
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -123,6 +125,22 @@ public class WaterBody implements Serializable {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static Observable<List<WaterBody>> getWaterbodiesAsync() {
+        return Observable.create(new Observable.OnSubscribe<List<WaterBody>>() {
+
+            @Override
+            public void call(Subscriber<? super List<WaterBody>> subscriber) {
+                try {
+                    List<WaterBody> result = fromWildlife();
+                    subscriber.onNext(result);    // Pass on the data to subscriber
+                    subscriber.onCompleted();     // Signal about the completion subscriber
+                } catch (Exception e) {
+                    subscriber.onError(e);        // Signal about the error to subscriber
+                }
+            }
+        });
     }
 
 }
