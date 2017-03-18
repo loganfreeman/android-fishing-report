@@ -31,6 +31,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
+import com.wang.avi.AVLoadingIndicatorView;
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.BaseActivity;
 import com.xiecc.seeWeather.common.PLog;
@@ -60,6 +61,9 @@ public class MainActivity extends BaseActivity implements
 
     @Bind(R.id.bottomBar)
     BottomBar mBottomBar;
+
+    @Bind(R.id.loading_avi)
+    AVLoadingIndicatorView loading_avi;
 
 
     /**
@@ -151,6 +155,7 @@ public class MainActivity extends BaseActivity implements
                         getSupportFragmentManager().executePendingTransactions();
                         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
                         mapFragment.getMapAsync(MainActivity.this);
+                        loading_avi.show();
                         break;
                     case R.id.tab_report:
                         getSupportFragmentManager().beginTransaction()
@@ -273,7 +278,6 @@ public class MainActivity extends BaseActivity implements
         }
     }
 
-    protected boolean mIsHidden = false;
 
 
     @Override
@@ -286,6 +290,8 @@ public class MainActivity extends BaseActivity implements
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+        loading_avi.hide();
         mMap = googleMap;
 
         mMap.setOnMyLocationButtonClickListener(this);
