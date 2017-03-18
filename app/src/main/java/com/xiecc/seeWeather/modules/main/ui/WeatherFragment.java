@@ -158,7 +158,7 @@ public class WeatherFragment extends AbstractBaseFragment implements AMapLocatio
             }).subscribe(new Subscriber<Weather>() {
             @Override
             public void onCompleted() {
-                ToastUtil.showShort(getString(R.string.complete));
+                PLog.i(getString(R.string.complete));
             }
 
             @Override
