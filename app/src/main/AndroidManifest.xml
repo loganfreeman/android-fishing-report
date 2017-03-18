@@ -45,7 +45,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDCa5WRSMk3CrNSf3y5xbyQTvp1_zwuTtE"/>
+            android:value="@string/google_maps_api_key"/>
 
         <service android:name="com.amap.api.location.APSService"/>
         <service android:name=".modules.service.AutoUpdateService"/>
