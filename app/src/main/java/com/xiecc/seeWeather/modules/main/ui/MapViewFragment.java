@@ -1,10 +1,7 @@
 package com.xiecc.seeWeather.modules.main.ui;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +11,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.AbstractBaseFragment;
-import com.xiecc.seeWeather.base.Loading;
-import com.xiecc.seeWeather.base.LocationEnabler;
-import com.xiecc.seeWeather.common.utils.ToastUtil;
 
 import butterknife.ButterKnife;
 

@@ -166,7 +166,7 @@ public class MainActivity extends BaseActivity implements
             }
         });
 
-        mBottomBar.setDefaultTab(R.id.tab_weather);
+        mBottomBar.setDefaultTab(R.id.tab_map);
     }
 
     /**
