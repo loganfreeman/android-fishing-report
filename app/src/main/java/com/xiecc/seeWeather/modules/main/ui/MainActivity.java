@@ -1,27 +1,30 @@
 package com.xiecc.seeWeather.modules.main.ui;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.animation.DecelerateInterpolator;
+import android.view.View;
+import android.view.Window;
+import android.widget.ProgressBar;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 import com.xiecc.seeWeather.R;
@@ -30,14 +33,17 @@ import com.xiecc.seeWeather.common.PLog;
 import com.xiecc.seeWeather.common.utils.*;
 import com.xiecc.seeWeather.modules.about.ui.AboutActivity;
 import com.xiecc.seeWeather.modules.city.ui.ChoiceCityActivity;
-import com.xiecc.seeWeather.modules.main.adapter.HomePagerAdapter;
 import com.xiecc.seeWeather.modules.service.AutoUpdateService;
 import com.xiecc.seeWeather.modules.setting.ui.SettingActivity;
 import rx.android.schedulers.AndroidSchedulers;
 
-import static com.xiecc.seeWeather.R.id.bottomBar;
+public class MainActivity extends BaseActivity implements
+        NavigationView.OnNavigationItemSelectedListener,
+        GoogleMap.OnMyLocationButtonClickListener,
+        OnMapReadyCallback,
+        ActivityCompat.OnRequestPermissionsResultCallback {
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String FRAGMENT_TAG = "map";
 
 
     @Bind(R.id.toolbar)
@@ -51,6 +57,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Bind(R.id.bottomBar)
     BottomBar mBottomBar;
 
+
+    ProgressDialog progress;
 
 
     @Override
@@ -122,7 +130,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         break;
                     case R.id.tab_map:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.contentContainer, new FishingMapFragment()).commit();
+                                .replace(R.id.contentContainer, SupportMapFragment.newInstance(), FRAGMENT_TAG).commit();
+                        getSupportFragmentManager().executePendingTransactions();
+                        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+                        mapFragment.getMapAsync(MainActivity.this);
                         break;
                     case R.id.tab_report:
                         getSupportFragmentManager().beginTransaction()
@@ -252,5 +263,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void onDestroy() {
         super.onDestroy();
         //OrmLite.getInstance().close();
+    }
+
+    @Override
+    public boolean onMyLocationButtonClick() {
+        return false;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        ToastUtil.showLong("Map ready");
+    }
+
+    private void showLoading() {
+
+    }
+
+    private void dismissLoading() {
+
     }
 }

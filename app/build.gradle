@@ -87,6 +87,11 @@ dependencies {
 
     compile 'com.roughike:bottom-bar:2.1.1'
 
+    // google map
+    compile 'com.google.android.gms:play-services-maps:10.2.0'
+    compile 'com.google.android.gms:play-services-location:10.2.0'
+
+
 
 }
 

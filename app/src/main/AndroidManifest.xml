@@ -21,6 +21,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_LOGS"/>
 
+
     <application
         android:name="com.xiecc.seeWeather.base.BaseApplication"
         android:allowBackup="true"
@@ -37,6 +38,14 @@
         <meta-data
             android:name="BUG_HD_SDK_GENERAL_KEY"
             android:value="6c5241a92d395baa70c227300f5db822"/>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDCa5WRSMk3CrNSf3y5xbyQTvp1_zwuTtE"/>
 
         <service android:name="com.amap.api.location.APSService"/>
         <service android:name=".modules.service.AutoUpdateService"/>

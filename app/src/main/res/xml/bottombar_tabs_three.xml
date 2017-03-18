@@ -8,8 +8,10 @@
         id="@+id/tab_report"
         icon="@drawable/ic_nearby"
         title="鱼情" />
+
     <tab
         id="@+id/tab_map"
-        icon="@drawable/ic_friends"
+        icon="@drawable/ic_action_map"
         title="Map" />
+
 </tabs>
