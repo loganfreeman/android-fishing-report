@@ -26,10 +26,10 @@ public class BaseApplication extends Application {
         sAppContext = getApplicationContext();
         CrashHandler.init(new CrashHandler(getApplicationContext()));
         if (!BuildConfig.DEBUG) {
-            FIR.init(this);
+            // FIR.init(this);
         }
-        BlockCanary.install(this, new AppBlockCanaryContext()).start();
-        LeakCanary.install(this);
+        // BlockCanary.install(this, new AppBlockCanaryContext()).start();
+        // LeakCanary.install(this);
         /**
          * 如果存在SD卡则将缓存写入SD卡,否则写入手机内存
          */

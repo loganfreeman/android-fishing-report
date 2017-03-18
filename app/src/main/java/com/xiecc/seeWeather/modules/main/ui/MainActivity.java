@@ -34,6 +34,8 @@ import com.roughike.bottombar.OnTabSelectListener;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.BaseActivity;
+import com.xiecc.seeWeather.base.Loading;
+import com.xiecc.seeWeather.base.LocationEnabler;
 import com.xiecc.seeWeather.common.PLog;
 import com.xiecc.seeWeather.common.utils.*;
 import com.xiecc.seeWeather.modules.about.ui.AboutActivity;
@@ -44,9 +46,9 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class MainActivity extends BaseActivity implements
         NavigationView.OnNavigationItemSelectedListener,
-        GoogleMap.OnMyLocationButtonClickListener,
-        OnMapReadyCallback,
-        ActivityCompat.OnRequestPermissionsResultCallback {
+        ActivityCompat.OnRequestPermissionsResultCallback,
+        Loading,
+        OnMapReadyCallback {
 
     private static final String FRAGMENT_TAG = "map";
 
@@ -150,12 +152,9 @@ public class MainActivity extends BaseActivity implements
                                 .replace(R.id.contentContainer, new WeatherFragment()).commit();
                         break;
                     case R.id.tab_map:
+                        showLoading();
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.contentContainer, SupportMapFragment.newInstance(), FRAGMENT_TAG).commit();
-                        getSupportFragmentManager().executePendingTransactions();
-                        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-                        mapFragment.getMapAsync(MainActivity.this);
-                        loading_avi.show();
+                                .replace(R.id.contentContainer, new MapViewFragment()).commit();
                         break;
                     case R.id.tab_report:
                         getSupportFragmentManager().beginTransaction()
@@ -278,6 +277,14 @@ public class MainActivity extends BaseActivity implements
         }
     }
 
+    public void showLoading() {
+        loading_avi.show();
+    }
+
+    public void hideLoading() {
+        loading_avi.hide();
+    }
+
 
 
     @Override
@@ -286,37 +293,26 @@ public class MainActivity extends BaseActivity implements
         //OrmLite.getInstance().close();
     }
 
-
-
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-
-        loading_avi.hide();
-        mMap = googleMap;
-
-        mMap.setOnMyLocationButtonClickListener(this);
+    public void onMapReady(GoogleMap map) {
+        hideLoading();
+        mMap = map;
         enableMyLocation();
     }
 
-    private void enableMyLocation() {
+
+    public void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission to access the location is missing.
             PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
                     Manifest.permission.ACCESS_FINE_LOCATION, true);
-        } else if (mMap != null) {
+        } else  {
             // Access to the location has been granted to the app.
             mMap.setMyLocationEnabled(true);
         }
     }
 
-    @Override
-    public boolean onMyLocationButtonClick() {
-        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
-        // Return false so that we don't consume the event and the default behavior still occurs
-        // (the camera animates to the user's current position).
-        return false;
-    }
 
 
     @Override
