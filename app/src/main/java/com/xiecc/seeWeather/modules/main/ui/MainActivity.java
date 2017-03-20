@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -40,9 +41,17 @@ import com.xiecc.seeWeather.common.PLog;
 import com.xiecc.seeWeather.common.utils.*;
 import com.xiecc.seeWeather.modules.about.ui.AboutActivity;
 import com.xiecc.seeWeather.modules.city.ui.ChoiceCityActivity;
+import com.xiecc.seeWeather.modules.fishing.domain.WaterBody;
 import com.xiecc.seeWeather.modules.service.AutoUpdateService;
 import com.xiecc.seeWeather.modules.setting.ui.SettingActivity;
+
+import java.util.List;
+
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+import static com.xiecc.seeWeather.R.id.listview;
 
 public class MainActivity extends BaseActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -298,6 +307,30 @@ public class MainActivity extends BaseActivity implements
         hideLoading();
         mMap = map;
         enableMyLocation();
+        addMarkers();
+    }
+
+    private void addMarkers() {
+        WaterBody.getWaterbodiesAsync2()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<List<WaterBody>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(List<WaterBody> waterBodies) {
+                for(WaterBody waterbody : waterBodies) {
+                    mMap.addMarker(waterbody.getMarkerOptions());
+                }
+            }
+        });
     }
 
 

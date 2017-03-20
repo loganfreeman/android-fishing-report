@@ -1,6 +1,9 @@
 package com.xiecc.seeWeather.modules.fishing.domain;
 
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -40,6 +43,20 @@ public class WaterBody implements Serializable {
     private static final AsyncSubject<List<WaterBody>> mSubject = AsyncSubject.create();
 
     public static final String UTAH_WILDLIFE_HOTSPOTS = "https://wildlife.utah.gov/hotspots/";
+
+    public LatLng getLatLan() {
+        return new LatLng(this.latitude, this.longitude);
+    }
+
+    public MarkerOptions getMarkerOptions() {
+
+        return new MarkerOptions()
+                .position(this.getLatLan())
+                .title(this.name)
+                .icon(Status.icon(this.status));
+    }
+
+
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
