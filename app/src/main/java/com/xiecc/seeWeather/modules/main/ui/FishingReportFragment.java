@@ -156,7 +156,8 @@ public class FishingReportFragment extends AbstractBaseFragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ToastUtil.showShort(adapter.getItem(position).getUrl());
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(adapter.getItem(position).getUrl()));
+                startActivity(browserIntent);
 
             }
         });
