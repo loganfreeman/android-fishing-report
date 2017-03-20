@@ -1,7 +1,9 @@
 package com.xiecc.seeWeather.modules.main.ui;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -95,7 +97,12 @@ public class FishingReportFragment extends AbstractBaseFragment {
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                ToastUtil.showLong(query);
+                WaterBody waterBody = adapter.search(query);
+                if(waterBody != null) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(waterBody.getUrl()));
+                    startActivity(browserIntent);
+                }
+
                 return false;
             }
 

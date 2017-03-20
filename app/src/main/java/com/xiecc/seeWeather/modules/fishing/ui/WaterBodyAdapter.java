@@ -31,6 +31,29 @@ public class WaterBodyAdapter extends BaseAdapter {
         this.inflater = LayoutInflater.from(this.context);
     }
 
+    public WaterBody search(String query) {
+        WaterBody found = null;
+        outerloop:
+        for(WaterBody item : items) {
+            query = query.toLowerCase();
+            String[] words = query.split("\\s+");
+            boolean all = true;
+            String name = item.name.toLowerCase();
+
+            for(String word : words) {
+                if (!name.contains(word)) {
+                    all = false;
+                }
+            }
+
+            if(all) {
+                found = item;
+                break outerloop;
+            }
+        }
+        return found;
+    }
+
 
     @Override
     public int getCount() {
