@@ -27,9 +27,11 @@ import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -326,9 +328,15 @@ public class MainActivity extends BaseActivity implements
 
             @Override
             public void onNext(List<WaterBody> waterBodies) {
+                // Create bounds that include all locations of the map
+                LatLngBounds.Builder boundsBuilder = LatLngBounds.builder();
                 for(WaterBody waterbody : waterBodies) {
                     mMap.addMarker(waterbody.getMarkerOptions());
+                    boundsBuilder.include(waterbody.getLatLan());
                 }
+
+                // Move camera to show all markers and locations
+                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 20));
             }
         });
     }
