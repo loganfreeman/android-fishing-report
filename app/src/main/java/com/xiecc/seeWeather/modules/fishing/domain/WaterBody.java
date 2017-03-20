@@ -3,6 +3,7 @@ package com.xiecc.seeWeather.modules.fishing.domain;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.clustering.ClusterItem;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -29,7 +30,7 @@ import rx.subjects.PublishSubject;
  * Created by scheng on 3/15/17.
  */
 
-public class WaterBody implements Serializable {
+public class WaterBody implements Serializable, ClusterItem {
     public  String name;
     public  double latitude;
     public double longitude;
@@ -77,6 +78,10 @@ public class WaterBody implements Serializable {
             strings.add(Objects.toString(object, null));
         }
         return strings;
+    }
+
+    public String getUrl() {
+        return href;
     }
 
     public static String getHref(double id) {
@@ -175,4 +180,18 @@ public class WaterBody implements Serializable {
         });
     }
 
+    @Override
+    public LatLng getPosition() {
+        return getLatLan();
+    }
+
+    @Override
+    public String getTitle() {
+        return name;
+    }
+
+    @Override
+    public String getSnippet() {
+        return status;
+    }
 }

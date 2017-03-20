@@ -32,6 +32,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.roughike.bottombar.BottomBar;
@@ -98,7 +99,7 @@ public class MainActivity extends BaseActivity implements
     private GoogleMap mMap;
 
     // Declare a variable for the cluster manager.
-    private ClusterManager<MyItem> mClusterManager;
+    private ClusterManager<WaterBody> mClusterManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -321,28 +322,33 @@ public class MainActivity extends BaseActivity implements
         return mMap;
     }
 
+    private ClusterManager<WaterBody> getMarkerManager() {
+        return mClusterManager;
+    }
+
     private void setupCluster(List<WaterBody> waterBodies) {
 
         // Initialize the manager with the context and the map.
         // (Activity extends context, so we can pass 'this' in the constructor.)
-        mClusterManager = new ClusterManager<MyItem>(this, getMap());
+        mClusterManager = new ClusterManager<WaterBody>(this, getMap());
 
         // Point the map's listeners at the listeners implemented by the cluster
         // manager.
         getMap().setOnCameraIdleListener(mClusterManager);
         getMap().setOnMarkerClickListener(mClusterManager);
+        getMap().setOnInfoWindowClickListener(mClusterManager);
 
         // Create bounds that include all locations of the map
         LatLngBounds.Builder boundsBuilder = LatLngBounds.builder();
         for(WaterBody waterbody : waterBodies) {
             boundsBuilder.include(waterbody.getLatLan());
-            mClusterManager.addItem(waterbody.getClusterItem());
+            mClusterManager.addItem(waterbody);
         }
 
         mClusterManager
-                .setOnClusterClickListener(new ClusterManager.OnClusterClickListener<MyItem>() {
+                .setOnClusterClickListener(new ClusterManager.OnClusterClickListener<WaterBody>() {
                     @Override
-                    public boolean onClusterClick(final Cluster<MyItem> cluster) {
+                    public boolean onClusterClick(final Cluster<WaterBody> cluster) {
                         getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(
                                 cluster.getPosition(), (float) Math.floor(getMap()
                                         .getCameraPosition().zoom + 1)), 300,
@@ -350,6 +356,15 @@ public class MainActivity extends BaseActivity implements
                         return true;
                     }
                 });
+
+
+        mClusterManager.setOnClusterItemInfoWindowClickListener(new ClusterManager.OnClusterItemInfoWindowClickListener<WaterBody>() {
+            @Override
+            public void onClusterItemInfoWindowClick(WaterBody myItem) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(myItem.getUrl()));
+                startActivity(browserIntent);
+            }
+        });
 
         // Move camera to show all markers and locations
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 20));
