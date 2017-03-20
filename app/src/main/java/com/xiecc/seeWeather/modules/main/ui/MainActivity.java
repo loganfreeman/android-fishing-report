@@ -32,6 +32,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -337,6 +338,18 @@ public class MainActivity extends BaseActivity implements
             boundsBuilder.include(waterbody.getLatLan());
             mClusterManager.addItem(waterbody.getClusterItem());
         }
+
+        mClusterManager
+                .setOnClusterClickListener(new ClusterManager.OnClusterClickListener<MyItem>() {
+                    @Override
+                    public boolean onClusterClick(final Cluster<MyItem> cluster) {
+                        getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(
+                                cluster.getPosition(), (float) Math.floor(getMap()
+                                        .getCameraPosition().zoom + 1)), 300,
+                                null);
+                        return true;
+                    }
+                });
 
         // Move camera to show all markers and locations
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 20));
