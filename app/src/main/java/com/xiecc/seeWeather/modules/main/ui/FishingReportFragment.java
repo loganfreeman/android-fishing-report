@@ -6,6 +6,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,6 +21,8 @@ import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.AbstractBaseFragment;
 import com.xiecc.seeWeather.common.utils.ToastUtil;
 import com.xiecc.seeWeather.modules.fishing.domain.WaterBody;
+import com.xiecc.seeWeather.modules.fishing.ui.*;
+import com.xiecc.seeWeather.modules.fishing.ui.WaterBodyAdapter;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -53,7 +58,7 @@ public class FishingReportFragment extends AbstractBaseFragment {
     @Bind(R.id.listview)
     ListView listview;
 
-    ArrayAdapter<String> adapter;
+    WaterBodyAdapter adapter;
 
 
 
@@ -79,6 +84,7 @@ public class FishingReportFragment extends AbstractBaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -86,6 +92,25 @@ public class FishingReportFragment extends AbstractBaseFragment {
         super.onViewCreated(view, savedInstanceState);
         initView();
         load();
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fishing_report_listview_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search:
+                break;
+            default:
+                break;
+        }
+
+        return false;
     }
 
     private void load() {
@@ -104,8 +129,7 @@ public class FishingReportFragment extends AbstractBaseFragment {
 
             @Override
             public void onNext(List<WaterBody> waterBodies) {
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                        android.R.layout.simple_list_item_1, WaterBody.toStringArray(waterBodies));
+                WaterBodyAdapter adapter = new WaterBodyAdapter(FishingReportFragment.this.getActivity(), waterBodies);
                 listview.setAdapter(adapter);
                 FishingReportFragment.this.adapter = adapter;
             }
@@ -118,8 +142,7 @@ public class FishingReportFragment extends AbstractBaseFragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String string = adapter.getItem(position);
-                ToastUtil.showShort(string);
+                ToastUtil.showShort(adapter.getItem(position).getUrl());
 
             }
         });
@@ -161,7 +184,6 @@ public class FishingReportFragment extends AbstractBaseFragment {
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                         android.R.layout.simple_list_item_1, WaterBody.toStringArray(hotSpots));
                 listview.setAdapter(adapter);
-                FishingReportFragment.this.adapter = adapter;
             }
             mProgressDialog.dismiss();
         }
