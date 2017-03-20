@@ -56,6 +56,10 @@ public class WaterBody implements Serializable {
                 .icon(Status.icon(this.status));
     }
 
+    public MyItem getClusterItem() {
+        return new MyItem(this.latitude, this.longitude, this.name, this.status);
+    }
+
 
 
     public String toString() {

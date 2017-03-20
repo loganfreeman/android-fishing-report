@@ -32,6 +32,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.maps.android.clustering.ClusterManager;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -43,6 +44,7 @@ import com.xiecc.seeWeather.common.PLog;
 import com.xiecc.seeWeather.common.utils.*;
 import com.xiecc.seeWeather.modules.about.ui.AboutActivity;
 import com.xiecc.seeWeather.modules.city.ui.ChoiceCityActivity;
+import com.xiecc.seeWeather.modules.fishing.domain.MyItem;
 import com.xiecc.seeWeather.modules.fishing.domain.WaterBody;
 import com.xiecc.seeWeather.modules.service.AutoUpdateService;
 import com.xiecc.seeWeather.modules.setting.ui.SettingActivity;
@@ -94,6 +96,8 @@ public class MainActivity extends BaseActivity implements
 
     private GoogleMap mMap;
 
+    // Declare a variable for the cluster manager.
+    private ClusterManager<MyItem> mClusterManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -309,10 +313,50 @@ public class MainActivity extends BaseActivity implements
         hideLoading();
         mMap = map;
         enableMyLocation();
-        addMarkers();
+        getWaterbodies();
     }
 
-    private void addMarkers() {
+    private GoogleMap getMap() {
+        return mMap;
+    }
+
+    private void setupCluster(List<WaterBody> waterBodies) {
+
+        // Initialize the manager with the context and the map.
+        // (Activity extends context, so we can pass 'this' in the constructor.)
+        mClusterManager = new ClusterManager<MyItem>(this, getMap());
+
+        // Point the map's listeners at the listeners implemented by the cluster
+        // manager.
+        getMap().setOnCameraIdleListener(mClusterManager);
+        getMap().setOnMarkerClickListener(mClusterManager);
+
+        // Create bounds that include all locations of the map
+        LatLngBounds.Builder boundsBuilder = LatLngBounds.builder();
+        for(WaterBody waterbody : waterBodies) {
+            boundsBuilder.include(waterbody.getLatLan());
+            mClusterManager.addItem(waterbody.getClusterItem());
+        }
+
+        // Move camera to show all markers and locations
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 20));
+
+    }
+
+    private void addMakers(List<WaterBody> waterBodies) {
+        // Create bounds that include all locations of the map
+        LatLngBounds.Builder boundsBuilder = LatLngBounds.builder();
+        for(WaterBody waterbody : waterBodies) {
+            mMap.addMarker(waterbody.getMarkerOptions());
+            boundsBuilder.include(waterbody.getLatLan());
+        }
+
+        // Move camera to show all markers and locations
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 20));
+    }
+
+
+    private void getWaterbodies() {
         WaterBody.getWaterbodiesAsync2()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<List<WaterBody>>() {
@@ -328,15 +372,7 @@ public class MainActivity extends BaseActivity implements
 
             @Override
             public void onNext(List<WaterBody> waterBodies) {
-                // Create bounds that include all locations of the map
-                LatLngBounds.Builder boundsBuilder = LatLngBounds.builder();
-                for(WaterBody waterbody : waterBodies) {
-                    mMap.addMarker(waterbody.getMarkerOptions());
-                    boundsBuilder.include(waterbody.getLatLan());
-                }
-
-                // Move camera to show all markers and locations
-                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 20));
+                setupCluster(waterBodies);
             }
         });
     }
