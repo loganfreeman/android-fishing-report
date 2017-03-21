@@ -7,7 +7,7 @@
     <tab
         id="@+id/tab_report"
         icon="@drawable/ic_nearby"
-        title="鱼情" />
+        title="Report" />
 
     <tab
         id="@+id/tab_stock"
