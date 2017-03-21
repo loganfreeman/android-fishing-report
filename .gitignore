@@ -44,3 +44,5 @@ build/
 
 # iml files
 *.iml
+
+app/*.iml
