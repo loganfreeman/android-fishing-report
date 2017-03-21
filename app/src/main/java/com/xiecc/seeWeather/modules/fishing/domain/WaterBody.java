@@ -4,6 +4,7 @@ package com.xiecc.seeWeather.modules.fishing.domain;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterItem;
+import com.xiecc.seeWeather.common.PLog;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -152,7 +153,7 @@ public class WaterBody implements Serializable, ClusterItem {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            PLog.e(e.getLocalizedMessage());
         }
         return null;
     }

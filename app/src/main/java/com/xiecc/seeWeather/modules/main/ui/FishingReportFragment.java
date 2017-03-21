@@ -82,6 +82,7 @@ public class FishingReportFragment extends AbstractBaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        safeSetTitle(getString(R.string.utah_fishing_report));
         initView();
         load();
     }

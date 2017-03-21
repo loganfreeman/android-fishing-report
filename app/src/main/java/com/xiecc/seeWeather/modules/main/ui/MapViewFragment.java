@@ -47,6 +47,7 @@ public class MapViewFragment extends AbstractBaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        safeSetTitle(getString(R.string.map));
         initView();
     }
 

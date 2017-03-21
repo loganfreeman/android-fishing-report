@@ -98,7 +98,6 @@ public class WaterBodyAdapter extends BaseAdapter {
         public MyViewHolder(View item) {
             tvTitle = (TextView) item.findViewById(R.id.tvTitle);
             tvDesc = (TextView) item.findViewById(R.id.tvDesc);
-            ivIcon = (ImageView) item.findViewById(R.id.ivIcon);
         }
     }
 }

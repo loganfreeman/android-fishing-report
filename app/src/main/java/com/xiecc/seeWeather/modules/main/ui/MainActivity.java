@@ -166,6 +166,10 @@ public class MainActivity extends BaseActivity implements
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.contentContainer, new FishingReportFragment()).commit();
                         break;
+                    case R.id.tab_stock:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.contentContainer, new StockReportFragment()).commit();
+                        break;
                     default:
                         break;
                 }
