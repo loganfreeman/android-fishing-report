@@ -64,7 +64,6 @@ public class StockReport {
         Elements rows = document.select("#fishTableBody > tr.table1");
 
         for(Element element : rows) {
-            PLog.i(element.html());
 
             reports.add(fromElement(element));
         }

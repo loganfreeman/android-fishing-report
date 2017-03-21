@@ -12,17 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         table:tableView_columnCount="6"
-        table:tableView_headerColor="@color/colorAccent" />
-
-
-    <include
-        layout="@layout/progressbar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="150dp"/>
-
-
-
+        table:tableView_headerColor="@color/colorAccent"
+        android:layout_marginBottom="120dp"/>
 
 
 </RelativeLayout>
