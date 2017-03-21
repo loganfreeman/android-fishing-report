@@ -7,7 +7,7 @@ import java.util.List;
 public class Weather implements Serializable {
 
 
-    @SerializedName("aqi") public AqiEntity aqi;
+    // @SerializedName("aqi") public AqiEntity aqi;
 
 
     @SerializedName("basic") public BasicEntity basic;
@@ -19,7 +19,7 @@ public class Weather implements Serializable {
     @SerializedName("status") public String status;
 
 
-    @SerializedName("suggestion") public SuggestionEntity suggestion;
+    // @SerializedName("suggestion") public SuggestionEntity suggestion;
 
 
     @SerializedName("daily_forecast") public List<DailyForecastEntity> dailyForecast;

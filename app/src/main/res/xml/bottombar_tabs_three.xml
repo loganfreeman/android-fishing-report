@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tabs>
     <tab
-        id="@+id/tab_weather"
-        icon="@drawable/ic_favorites"
-        title="天气" />
-    <tab
         id="@+id/tab_map"
         icon="@drawable/ic_action_map"
         title="Map" />

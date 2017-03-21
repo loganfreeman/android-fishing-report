@@ -170,9 +170,7 @@ public class WeatherFragment extends AbstractBaseFragment implements AMapLocatio
             @Override
             public void onNext(Weather weather) {
                 mWeather.status = weather.status;
-                mWeather.aqi = weather.aqi;
                 mWeather.basic = weather.basic;
-                mWeather.suggestion = weather.suggestion;
                 mWeather.now = weather.now;
                 mWeather.dailyForecast = weather.dailyForecast;
                 mWeather.hourlyForecast = weather.hourlyForecast;

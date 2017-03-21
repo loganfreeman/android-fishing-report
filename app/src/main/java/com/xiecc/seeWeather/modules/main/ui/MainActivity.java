@@ -110,7 +110,6 @@ public class MainActivity extends BaseActivity implements
         PLog.i("onCreate");
         initView();
         initDrawer();
-        initIcon();
         startService(new Intent(this, AutoUpdateService.class));
     }
 
@@ -128,8 +127,6 @@ public class MainActivity extends BaseActivity implements
     protected void onRestart() {
         super.onRestart();
         PLog.i("onRestart");
-        //为了实现 Intent 重启使图标生效
-        initIcon();
     }
 
     @Override
@@ -159,15 +156,7 @@ public class MainActivity extends BaseActivity implements
         mBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
-                if (tabId == R.id.tab_weather) {
-                    // The tab with id R.id.tab_favorites was selected,
-                    // change your content accordingly.
-                }
                 switch(tabId) {
-                    case R.id.tab_weather:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.contentContainer, new WeatherFragment()).commit();
-                        break;
                     case R.id.tab_map:
                         showLoading();
                         getSupportFragmentManager().beginTransaction()
@@ -203,41 +192,7 @@ public class MainActivity extends BaseActivity implements
         }
     }
 
-    /**
-     * 初始化Icon
-     */
-    private void initIcon() {
-        if (SharedPreferenceUtil.getInstance().getIconType() == 0) {
-            SharedPreferenceUtil.getInstance().putInt("未知", R.mipmap.none);
-            SharedPreferenceUtil.getInstance().putInt("晴", R.mipmap.type_one_sunny);
-            SharedPreferenceUtil.getInstance().putInt("阴", R.mipmap.type_one_cloudy);
-            SharedPreferenceUtil.getInstance().putInt("多云", R.mipmap.type_one_cloudy);
-            SharedPreferenceUtil.getInstance().putInt("少云", R.mipmap.type_one_cloudy);
-            SharedPreferenceUtil.getInstance().putInt("晴间多云", R.mipmap.type_one_cloudytosunny);
-            SharedPreferenceUtil.getInstance().putInt("小雨", R.mipmap.type_one_light_rain);
-            SharedPreferenceUtil.getInstance().putInt("中雨", R.mipmap.type_one_light_rain);
-            SharedPreferenceUtil.getInstance().putInt("大雨", R.mipmap.type_one_heavy_rain);
-            SharedPreferenceUtil.getInstance().putInt("阵雨", R.mipmap.type_one_thunderstorm);
-            SharedPreferenceUtil.getInstance().putInt("雷阵雨", R.mipmap.type_one_thunder_rain);
-            SharedPreferenceUtil.getInstance().putInt("霾", R.mipmap.type_one_fog);
-            SharedPreferenceUtil.getInstance().putInt("雾", R.mipmap.type_one_fog);
-        } else {
-            SharedPreferenceUtil.getInstance().putInt("未知", R.mipmap.none);
-            SharedPreferenceUtil.getInstance().putInt("晴", R.mipmap.type_two_sunny);
-            SharedPreferenceUtil.getInstance().putInt("阴", R.mipmap.type_two_cloudy);
-            SharedPreferenceUtil.getInstance().putInt("多云", R.mipmap.type_two_cloudy);
-            SharedPreferenceUtil.getInstance().putInt("少云", R.mipmap.type_two_cloudy);
-            SharedPreferenceUtil.getInstance().putInt("晴间多云", R.mipmap.type_two_cloudytosunny);
-            SharedPreferenceUtil.getInstance().putInt("小雨", R.mipmap.type_two_light_rain);
-            SharedPreferenceUtil.getInstance().putInt("中雨", R.mipmap.type_two_rain);
-            SharedPreferenceUtil.getInstance().putInt("大雨", R.mipmap.type_two_rain);
-            SharedPreferenceUtil.getInstance().putInt("阵雨", R.mipmap.type_two_rain);
-            SharedPreferenceUtil.getInstance().putInt("雷阵雨", R.mipmap.type_two_thunderstorm);
-            SharedPreferenceUtil.getInstance().putInt("霾", R.mipmap.type_two_haze);
-            SharedPreferenceUtil.getInstance().putInt("雾", R.mipmap.type_two_fog);
-            SharedPreferenceUtil.getInstance().putInt("雨夹雪", R.mipmap.type_two_snowrain);
-        }
-    }
+
 
     private void showFabDialog() {
         new AlertDialog.Builder(MainActivity.this).setTitle("点赞")

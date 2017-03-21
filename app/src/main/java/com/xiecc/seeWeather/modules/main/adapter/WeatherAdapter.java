@@ -46,9 +46,6 @@ public class WeatherAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHol
         if (position == WeatherAdapter.TYPE_THREE) {
             return WeatherAdapter.TYPE_THREE;
         }
-        if (position == WeatherAdapter.TYPE_FORE) {
-            return WeatherAdapter.TYPE_FORE;
-        }
         return super.getItemViewType(position);
     }
 
@@ -63,9 +60,6 @@ public class WeatherAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHol
                 return new HoursWeatherViewHolder(
                     LayoutInflater.from(mContext).inflate(R.layout.item_hour_info, parent, false));
             case TYPE_THREE:
-                return new SuggestionViewHolder(
-                    LayoutInflater.from(mContext).inflate(R.layout.item_suggestion, parent, false));
-            case TYPE_FORE:
                 return new ForecastViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_forecast, parent, false));
         }
         return null;
@@ -82,9 +76,6 @@ public class WeatherAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHol
                 ((HoursWeatherViewHolder) holder).bind(mWeatherData);
                 break;
             case TYPE_THREE:
-                ((SuggestionViewHolder) holder).bind(mWeatherData);
-                break;
-            case TYPE_FORE:
                 ((ForecastViewHolder) holder).bind(mWeatherData);
                 break;
             default:
@@ -97,7 +88,7 @@ public class WeatherAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
-        return mWeatherData.status != null ? 4 : 0;
+        return mWeatherData.status != null ? 3 : 0;
     }
 
     /**
@@ -105,18 +96,12 @@ public class WeatherAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHol
      */
     class NowWeatherViewHolder extends BaseViewHolder<Weather> {
 
-        @Bind(R.id.weather_icon)
-        ImageView weatherIcon;
         @Bind(R.id.temp_flu)
         TextView tempFlu;
         @Bind(R.id.temp_max)
         TextView tempMax;
         @Bind(R.id.temp_min)
         TextView tempMin;
-        @Bind(R.id.temp_pm)
-        TextView tempPm;
-        @Bind(R.id.temp_quality)
-        TextView tempQuality;
         @Bind(R.id.cardView)
         CardView cardView;
 
@@ -131,12 +116,6 @@ public class WeatherAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHol
                     String.format("↑ %s ℃", weather.dailyForecast.get(0).tmp.max));
                 tempMin.setText(
                     String.format("↓ %s ℃", weather.dailyForecast.get(0).tmp.min));
-
-                tempPm.setText(String.format("PM2.5: %s μg/m³", Util.safeText(weather.aqi.city.pm25)));
-                tempQuality.setText(Util.safeText("空气质量： ", weather.aqi.city.qlty));
-                ImageLoader.load(itemView.getContext(),
-                    SharedPreferenceUtil.getInstance().getInt(weather.now.cond.txt, R.mipmap.none),
-                    weatherIcon);
             } catch (Exception e) {
                 PLog.e(TAG, e.toString());
             }
@@ -217,7 +196,7 @@ public class WeatherAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHol
         }
 
         protected void bind(Weather weather) {
-            try {
+/*            try {
                 clothBrief.setText(String.format("穿衣指数---%s", weather.suggestion.drsg.brf));
                 clothTxt.setText(weather.suggestion.drsg.txt);
 
@@ -231,7 +210,7 @@ public class WeatherAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHol
                 fluTxt.setText(weather.suggestion.flu.txt);
             } catch (Exception e) {
                 PLog.e(e.toString());
-            }
+            }*/
         }
     }
 
