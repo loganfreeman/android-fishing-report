@@ -12,7 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         table:tableView_columnCount="6"
-        table:tableView_headerColor="@color/colorAccent"
+        table:tableView_headerColor="@color/cloudyText"
+        table:tableView_headerElevation="10"
+        android:divider="@color/colorSunset"
+        android:dividerHeight="1dip"
         android:layout_marginBottom="120dp"/>
 
 

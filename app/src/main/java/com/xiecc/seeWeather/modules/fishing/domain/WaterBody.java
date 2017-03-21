@@ -13,6 +13,7 @@ import org.jsoup.select.Elements;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.Scriptable;
+import org.parceler.Parcel;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -25,20 +26,20 @@ import java.util.regex.Pattern;
 import rx.Observable;
 import rx.Subscriber;
 import rx.subjects.AsyncSubject;
-import rx.subjects.PublishSubject;
 
 /**
  * Created by scheng on 3/15/17.
  */
 
+@Parcel
 public class WaterBody implements Serializable, ClusterItem {
-    public  String name;
-    public  double latitude;
-    public double longitude;
-    public String status;
-    public String fish;
-    public double id;
-    public String href;
+    private String name;
+    private double latitude;
+    private double longitude;
+    private String status;
+    private String fish;
+    private double id;
+    private String href;
 
     public static final Pattern r = Pattern.compile("(var\\s*waterbody[^;]*;(?=\\s))", Pattern.DOTALL);
 
@@ -47,28 +48,28 @@ public class WaterBody implements Serializable, ClusterItem {
     public static final String UTAH_WILDLIFE_HOTSPOTS = "https://wildlife.utah.gov/hotspots/";
 
     public LatLng getLatLan() {
-        return new LatLng(this.latitude, this.longitude);
+        return new LatLng(this.getLatitude(), this.getLongitude());
     }
 
     public MarkerOptions getMarkerOptions() {
 
         return new MarkerOptions()
                 .position(this.getLatLan())
-                .title(this.name)
-                .icon(Status.icon(this.status));
+                .title(this.getName())
+                .icon(Status.icon(this.getStatus()));
     }
 
     public MyItem getClusterItem() {
-        return new MyItem(this.latitude, this.longitude, this.name, this.status);
+        return new MyItem(this.getLatitude(), this.getLongitude(), this.getName(), this.getStatus());
     }
 
 
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(name);
+        sb.append(getName());
         sb.append(" (");
-        sb.append(status);
+        sb.append(getStatus());
         sb.append(")");
         return sb.toString();
     }
@@ -82,7 +83,7 @@ public class WaterBody implements Serializable, ClusterItem {
     }
 
     public String getUrl() {
-        return href;
+        return getHref();
     }
 
     public static String getHref(double id) {
@@ -90,13 +91,13 @@ public class WaterBody implements Serializable, ClusterItem {
     }
     public static WaterBody fromV8Array(NativeArray array) {
         WaterBody waterBody = new WaterBody();
-        waterBody.name = (String)array.get(0);
-        waterBody.latitude = (double) array.get(1);
-        waterBody.longitude = (double) array.get(2);
-        waterBody.status = (String)array.get(4);
-        waterBody.fish = (String)array.get(5);
-        waterBody.id = (double)array.get(3);
-        waterBody.href = getHref(waterBody.id);
+        waterBody.setName((String)array.get(0));
+        waterBody.setLatitude((double) array.get(1));
+        waterBody.setLongitude((double) array.get(2));
+        waterBody.setStatus((String)array.get(4));
+        waterBody.setFish((String)array.get(5));
+        waterBody.setId((double)array.get(3));
+        waterBody.setHref(getHref(waterBody.getId()));
         return waterBody;
     }
 
@@ -188,11 +189,67 @@ public class WaterBody implements Serializable, ClusterItem {
 
     @Override
     public String getTitle() {
-        return name;
+        return getName();
     }
 
     @Override
     public String getSnippet() {
+        return getStatus();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getStatus() {
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getFish() {
+        return fish;
+    }
+
+    public void setFish(String fish) {
+        this.fish = fish;
+    }
+
+    public double getId() {
+        return id;
+    }
+
+    public void setId(double id) {
+        this.id = id;
+    }
+
+    public String getHref() {
+        return href;
+    }
+
+    public void setHref(String href) {
+        this.href = href;
     }
 }

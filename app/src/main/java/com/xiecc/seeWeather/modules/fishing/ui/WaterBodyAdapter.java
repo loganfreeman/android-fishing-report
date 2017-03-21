@@ -38,7 +38,7 @@ public class WaterBodyAdapter extends BaseAdapter {
             query = query.toLowerCase();
             String[] words = query.split("\\s+");
             boolean all = true;
-            String name = item.name.toLowerCase();
+            String name = item.getName().toLowerCase();
 
             for(String word : words) {
                 if (!name.contains(word)) {
@@ -67,7 +67,7 @@ public class WaterBodyAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return (long) getItem(position).id;
+        return (long) getItem(position).getId();
     }
 
     @Override

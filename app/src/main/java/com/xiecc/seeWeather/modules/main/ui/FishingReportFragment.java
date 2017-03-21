@@ -128,6 +128,12 @@ public class FishingReportFragment extends AbstractBaseFragment {
         return false;
     }
 
+    private void startWebview(int position) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(adapter.getItem(position).getUrl()));
+        startActivity(browserIntent);
+    }
+
+
     private void load() {
         WaterBody.getWaterbodiesAsync2()
                 .subscribeOn(Schedulers.io())
@@ -157,8 +163,7 @@ public class FishingReportFragment extends AbstractBaseFragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(adapter.getItem(position).getUrl()));
-                startActivity(browserIntent);
+                FishingReportActivity.start(getActivity(), adapter.getItem(position));
 
             }
         });

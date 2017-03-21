@@ -1,5 +1,8 @@
 package com.xiecc.seeWeather.modules.fishing.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.xiecc.seeWeather.common.PLog;
 
 import org.jsoup.Jsoup;
@@ -8,6 +11,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,7 +29,7 @@ import static com.xiecc.seeWeather.modules.fishing.domain.WaterBody.UTAH_WILDLIF
  * Created by shanhong on 3/21/17.
  */
 
-public class StockReport {
+public class StockReport implements Parcelable {
 
     public static final String UTAH_FISH_STOCK_URL = "https://dwrapps.utah.gov/fishstocking/Fish";
 
@@ -82,4 +86,47 @@ public class StockReport {
         report.stockdate = getDate(element.select("td.stockdate").first().text());
         return report;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(watername);
+        out.writeString(county);
+        out.writeString(species);
+        out.writeInt(quantity);
+        out.writeDouble(length);
+        out.writeString(df.format(stockdate));
+
+    }
+
+    public StockReport() {
+
+    }
+
+    private StockReport(Parcel in) {
+        watername = in.readString();
+        county = in.readString();
+        species = in.readString();
+        quantity = in.readInt();
+        length = in.readDouble();
+        stockdate = getDate(in.readString());
+
+    }
+
+    public static final Parcelable.Creator<StockReport> CREATOR = new Parcelable.Creator<StockReport>(){
+
+        @Override
+        public StockReport createFromParcel(Parcel source) {
+            return new StockReport(source);
+        }
+
+        @Override
+        public StockReport[] newArray(int size) {
+            return new StockReport[size];
+        }
+    };
 }

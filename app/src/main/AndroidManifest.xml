@@ -76,6 +76,16 @@
             android:name=".modules.about.ui.AboutActivity"
             android:screenOrientation="portrait"
             />
+
+        <activity android:name=".modules.main.ui.StockReportActivity"
+            android:theme="@style/Theme.AppCompat.Light">
+
+        </activity>
+
+        <activity android:name=".modules.main.ui.FishingReportActivity"
+            android:theme="@style/Theme.AppCompat.Light">
+
+        </activity>
     </application>
 
 </manifest>

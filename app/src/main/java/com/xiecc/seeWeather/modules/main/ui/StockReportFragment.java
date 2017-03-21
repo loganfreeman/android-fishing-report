@@ -1,5 +1,6 @@
 package com.xiecc.seeWeather.modules.main.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -72,7 +73,7 @@ public class StockReportFragment extends AbstractBaseFragment {
         tableView.addDataClickListener(new TableDataClickListener<StockReport>() {
             @Override
             public void onDataClicked(int rowIndex, StockReport clickedData) {
-                ToastUtil.showLong(clickedData.watername);
+                StockReportActivity.start(getActivity(), clickedData);
             }
 
 
