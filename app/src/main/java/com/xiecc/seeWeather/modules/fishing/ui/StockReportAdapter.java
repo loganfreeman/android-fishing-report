@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xiecc.seeWeather.modules.fishing.domain.StockReport;
+import com.xiecc.seeWeather.modules.fishing.domain.WaterBody;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.codecrafters.tableview.TableDataAdapter;
@@ -18,8 +20,10 @@ import de.codecrafters.tableview.TableDataAdapter;
  */
 
 public class StockReportAdapter extends TableDataAdapter<StockReport> {
+    private List<StockReport> items;
     public StockReportAdapter(Context context, List<StockReport> data) {
         super(context, data);
+        this.items = data;
     }
 
     @Override
@@ -52,5 +56,27 @@ public class StockReportAdapter extends TableDataAdapter<StockReport> {
         final TextView textView = new TextView(getContext());
         textView.setText(text);
         return textView;
+    }
+
+    public List<StockReport> search(String query) {
+        List<StockReport> reports = new ArrayList<StockReport>();
+        outerloop:
+        for(StockReport item : items) {
+            query = query.toLowerCase();
+            String[] words = query.split("\\s+");
+            boolean all = true;
+            String name = item.watername.toLowerCase();
+
+            for(String word : words) {
+                if (!name.contains(word)) {
+                    all = false;
+                }
+            }
+
+            if(all) {
+                reports.add(item);
+            }
+        }
+        return reports;
     }
 }

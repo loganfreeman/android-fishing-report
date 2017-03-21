@@ -100,8 +100,7 @@ public class FishingReportFragment extends AbstractBaseFragment {
             public boolean onQueryTextSubmit(String query) {
                 WaterBody waterBody = adapter.search(query);
                 if(waterBody != null) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(waterBody.getUrl()));
-                    startActivity(browserIntent);
+                    FishingReportActivity.start(getActivity(), waterBody);
                 }
 
                 return false;

@@ -86,6 +86,11 @@
             android:theme="@style/Theme.AppCompat.Light">
 
         </activity>
+
+        <activity android:name=".modules.main.ui.StockReportListActivity"
+            android:theme="@style/Theme.AppCompat.Light">
+
+        </activity>
     </application>
 
 </manifest>
