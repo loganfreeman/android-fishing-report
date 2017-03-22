@@ -3,6 +3,7 @@ package com.xiecc.seeWeather.modules.main.ui;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,11 +13,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.AbstractBaseFragment;
 import com.xiecc.seeWeather.common.PLog;
 import com.xiecc.seeWeather.common.utils.ToastUtil;
 import com.xiecc.seeWeather.modules.fishing.domain.StockReport;
+import com.xiecc.seeWeather.modules.fishing.ui.SimpleAdapter;
 import com.xiecc.seeWeather.modules.fishing.ui.StockReportAdapter;
 import com.xiecc.seeWeather.modules.fishing.ui.StockReportHeaderAdapter;
 
@@ -30,16 +33,21 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static com.xiecc.seeWeather.R.id.tableView;
+
 /**
  * Created by shanhong on 3/21/17.
  */
 
 public class StockReportFragment extends AbstractBaseFragment {
-    @Bind(R.id.tableView)
-    TableView tableView;
+    @Bind(R.id.ultimate_recycler_view)
+    UltimateRecyclerView ultimateRecyclerView;
+
     private View view;
 
-    private StockReportAdapter adapter;
+    LinearLayoutManager linearLayoutManager;
+
+    SimpleAdapter simpleRecyclerViewAdapter = null;
 
     @Override
     protected void lazyLoad() {
@@ -79,9 +87,7 @@ public class StockReportFragment extends AbstractBaseFragment {
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                List<StockReport> reports = adapter.search(query);
-                PLog.i("Found reports " + reports.size());
-                StockReportListActivity.start(getActivity(), reports);
+
 
                 return false;
             }
@@ -96,17 +102,14 @@ public class StockReportFragment extends AbstractBaseFragment {
     }
 
     private void initView(List<StockReport> stockReports) {
-        adapter = new StockReportAdapter(StockReportFragment.this.getActivity(), stockReports);
-        tableView.setHeaderAdapter(new StockReportHeaderAdapter(StockReportFragment.this.getActivity(), 6));
-        tableView.setDataAdapter(adapter);
-        tableView.addDataClickListener(new TableDataClickListener<StockReport>() {
-            @Override
-            public void onDataClicked(int rowIndex, StockReport clickedData) {
-                StockReportActivity.start(getActivity(), clickedData);
-            }
+        ultimateRecyclerView.setHasFixedSize(false);
 
+        simpleRecyclerViewAdapter = new SimpleAdapter(stockReports);
 
-        });
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        ultimateRecyclerView.setLayoutManager(linearLayoutManager);
+
+        ultimateRecyclerView.setAdapter(simpleRecyclerViewAdapter);
     }
 
     private void load() {

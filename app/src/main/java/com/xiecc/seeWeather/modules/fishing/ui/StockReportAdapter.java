@@ -59,24 +59,6 @@ public class StockReportAdapter extends TableDataAdapter<StockReport> {
     }
 
     public List<StockReport> search(String query) {
-        List<StockReport> reports = new ArrayList<StockReport>();
-        outerloop:
-        for(StockReport item : items) {
-            query = query.toLowerCase();
-            String[] words = query.split("\\s+");
-            boolean all = true;
-            String name = item.watername.toLowerCase();
-
-            for(String word : words) {
-                if (!name.contains(word)) {
-                    all = false;
-                }
-            }
-
-            if(all) {
-                reports.add(item);
-            }
-        }
-        return reports;
+        return StockReport.search(this.items, query);
     }
 }

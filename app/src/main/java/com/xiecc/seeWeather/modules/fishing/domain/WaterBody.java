@@ -1,6 +1,9 @@
 package com.xiecc.seeWeather.modules.fishing.domain;
 
 
+import android.annotation.TargetApi;
+import android.os.Build;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterItem;
@@ -22,6 +25,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -99,6 +103,34 @@ public class WaterBody implements Serializable, ClusterItem {
         waterBody.setId((double)array.get(3));
         waterBody.setHref(getHref(waterBody.getId()));
         return waterBody;
+    }
+
+    public static WaterBody search(List<WaterBody> items, String query) {
+        WaterBody found = null;
+        outerloop:
+        for(WaterBody item : items) {
+            query = query.toLowerCase();
+            String[] words = query.split("\\s+");
+            boolean all = true;
+            String name = item.getName().toLowerCase();
+
+            for(String word : words) {
+                if (!name.contains(word)) {
+                    all = false;
+                }
+            }
+
+            if(all) {
+                found = item;
+                break outerloop;
+            }
+        }
+        return found;
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    public static List<WaterBody> filterByStatus(List<WaterBody> items, String query) {
+        return items.stream().filter(item -> item.getStatus().equals(query)).collect(Collectors.toList());
     }
 
     public static List<WaterBody> getHotspots(String html) {

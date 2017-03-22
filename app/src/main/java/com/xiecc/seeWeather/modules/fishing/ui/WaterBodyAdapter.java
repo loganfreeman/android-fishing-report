@@ -36,32 +36,12 @@ public class WaterBodyAdapter extends BaseAdapter {
         this.inflater = LayoutInflater.from(this.context);
     }
 
-    @TargetApi(Build.VERSION_CODES.N)
     public List<WaterBody> filterByStatus(String query) {
-        return this.items.stream().filter(item -> item.getStatus().equals(query)).collect(Collectors.toList());
+        return WaterBody.filterByStatus(this.items, query);
     }
 
     public WaterBody search(String query) {
-        WaterBody found = null;
-        outerloop:
-        for(WaterBody item : items) {
-            query = query.toLowerCase();
-            String[] words = query.split("\\s+");
-            boolean all = true;
-            String name = item.getName().toLowerCase();
-
-            for(String word : words) {
-                if (!name.contains(word)) {
-                    all = false;
-                }
-            }
-
-            if(all) {
-                found = item;
-                break outerloop;
-            }
-        }
-        return found;
+        return WaterBody.search(this.items, query);
     }
 
 

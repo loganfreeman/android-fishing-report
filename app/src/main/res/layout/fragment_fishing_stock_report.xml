@@ -6,17 +6,14 @@
     android:layout_height="match_parent"
     >
 
-    <de.codecrafters.tableview.TableView
-        xmlns:table="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/tableView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        table:tableView_columnCount="6"
-        table:tableView_headerColor="@color/cloudyText"
-        table:tableView_headerElevation="10"
-        android:divider="@color/colorSunset"
-        android:dividerHeight="1dip"
-        android:layout_marginBottom="120dp"/>
+    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+        android:id="@+id/ultimate_recycler_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        app:recyclerviewClipToPadding="true"
+        app:recyclerviewDefaultSwipeColor="@array/google_colors"
+        app:recyclerviewFloatingActionView="@layout/floating_view"
+        app:recyclerviewScrollbars="vertical" />
 
 
 </RelativeLayout>
