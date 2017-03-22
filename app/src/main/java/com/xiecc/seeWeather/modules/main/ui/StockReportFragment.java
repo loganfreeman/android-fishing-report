@@ -20,20 +20,16 @@ import com.xiecc.seeWeather.common.PLog;
 import com.xiecc.seeWeather.common.utils.ToastUtil;
 import com.xiecc.seeWeather.modules.fishing.domain.StockReport;
 import com.xiecc.seeWeather.modules.fishing.ui.SimpleAdapter;
-import com.xiecc.seeWeather.modules.fishing.ui.StockReportAdapter;
-import com.xiecc.seeWeather.modules.fishing.ui.StockReportHeaderAdapter;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.codecrafters.tableview.TableView;
-import de.codecrafters.tableview.listeners.TableDataClickListener;
+
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static com.xiecc.seeWeather.R.id.tableView;
 
 /**
  * Created by shanhong on 3/21/17.
@@ -87,7 +83,9 @@ public class StockReportFragment extends AbstractBaseFragment {
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
+                List<StockReport> reports = simpleRecyclerViewAdapter.search(query);
+                PLog.i("Found reports " + reports.size());
+                StockReportListActivity.start(getActivity(), reports);
 
                 return false;
             }

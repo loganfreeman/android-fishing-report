@@ -76,6 +76,10 @@ public class SimpleAdapter extends UltimateViewAdapter {
 
     }
 
+    public List<StockReport> search(String query) {
+        return StockReport.search(this.stockReports, query);
+    }
+
     class ViewHolder extends UltimateRecyclerviewViewHolder {
         TextView watername, county, species, quantity, length, stockdate;
         public ViewHolder(View itemView) {
