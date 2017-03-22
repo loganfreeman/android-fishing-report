@@ -50,4 +50,8 @@ public enum Status {
         }
         return null;
     }
+
+    public String status() {
+        return status;
+    }
 }
