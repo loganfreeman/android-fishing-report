@@ -1,6 +1,9 @@
 package com.xiecc.seeWeather.modules.fishing.ui;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xiecc.seeWeather.R;
+import com.xiecc.seeWeather.modules.fishing.domain.ReportFilter;
 import com.xiecc.seeWeather.modules.fishing.domain.WaterBody;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by shanhong on 3/20/17.
@@ -89,6 +94,13 @@ public class WaterBodyAdapter extends BaseAdapter {
         //mViewHolder.ivIcon.setImageResource(currentListData.getImgResId());
 
         return convertView;
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    public ReportFilter getFilter() {
+        ReportFilter filter = new ReportFilter();
+        filter.getStatuses().addAll(items.stream().map(WaterBody::getStatus).distinct().collect(Collectors.toList()));
+        return filter;
     }
 
     private class MyViewHolder {

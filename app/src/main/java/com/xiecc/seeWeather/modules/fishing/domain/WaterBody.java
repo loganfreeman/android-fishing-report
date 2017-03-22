@@ -33,13 +33,13 @@ import rx.subjects.AsyncSubject;
 
 @Parcel
 public class WaterBody implements Serializable, ClusterItem {
-    private String name;
-    private double latitude;
-    private double longitude;
-    private String status;
-    private String fish;
-    private double id;
-    private String href;
+    String name;
+    double latitude;
+    double longitude;
+    String status;
+    String fish;
+    double id;
+    String href;
 
     public static final Pattern r = Pattern.compile("(var\\s*waterbody[^;]*;(?=\\s))", Pattern.DOTALL);
 

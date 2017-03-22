@@ -52,5 +52,6 @@
     <string name="utah_stock_report_list">Stocking report</string>
     <string name="map">UTAH fishing report map</string>
     <string name="utah_fishing_report">UTAH fishing report</string>
+    <string name="choose_report_filter">Choose a filter</string>
 
 </resources>

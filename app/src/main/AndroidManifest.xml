@@ -91,6 +91,11 @@
             android:theme="@style/Theme.AppCompat.Light">
 
         </activity>
+
+        <activity android:name=".modules.main.ui.FishingReportFilterActivity"
+            android:theme="@style/Theme.AppCompat.Light">
+
+        </activity>
     </application>
 
 </manifest>

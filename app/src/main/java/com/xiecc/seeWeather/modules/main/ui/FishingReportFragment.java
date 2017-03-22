@@ -25,7 +25,6 @@ import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.AbstractBaseFragment;
 import com.xiecc.seeWeather.common.utils.ToastUtil;
 import com.xiecc.seeWeather.modules.fishing.domain.WaterBody;
-import com.xiecc.seeWeather.modules.fishing.ui.*;
 import com.xiecc.seeWeather.modules.fishing.ui.WaterBodyAdapter;
 
 
@@ -88,6 +87,8 @@ public class FishingReportFragment extends AbstractBaseFragment {
     }
 
 
+
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.fishing_report_listview_menu, menu);
@@ -119,6 +120,9 @@ public class FishingReportFragment extends AbstractBaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
+                break;
+            case R.id.action_filter:
+                FishingReportFilterActivity.start(getActivity(), adapter.getFilter());
                 break;
             default:
                 break;
