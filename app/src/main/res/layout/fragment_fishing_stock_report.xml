@@ -13,7 +13,8 @@
         app:recyclerviewClipToPadding="true"
         app:recyclerviewDefaultSwipeColor="@array/google_colors"
         app:recyclerviewFloatingActionView="@layout/floating_view"
-        app:recyclerviewScrollbars="vertical" />
+        app:recyclerviewScrollbars="vertical"
+        />
 
 
 </RelativeLayout>

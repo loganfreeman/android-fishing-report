@@ -53,5 +53,7 @@
     <string name="map">Fishing Report Map</string>
     <string name="utah_fishing_report">Fishing Report</string>
     <string name="choose_report_filter">Choose a filter</string>
+    <string name="avg_len">Average Length</string>
+    <string name="stock_date">Stock Date</string>
 
 </resources>
