@@ -2,6 +2,7 @@ package com.xiecc.seeWeather.modules.main.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -37,6 +38,8 @@ import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+import static com.xiecc.seeWeather.modules.main.ui.FishingReportFilterActivity.RESULT_CODE;
 
 
 /**
@@ -122,13 +125,22 @@ public class FishingReportFragment extends AbstractBaseFragment {
             case R.id.action_search:
                 break;
             case R.id.action_filter:
-                FishingReportFilterActivity.start(getActivity(), adapter.getFilter());
+                //FishingReportFilterActivity.start(getActivity(), adapter.getFilter());
+                startActivityForResult(FishingReportFilterActivity.getIntent(getActivity(), adapter.getFilter()), RESULT_CODE);
                 break;
             default:
                 break;
         }
 
         return false;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if( requestCode == RESULT_CODE ) {
+            String filter = data.getStringExtra("MESSAGE");
+            FishingReportListActivity.start(getActivity(), adapter.filterByStatus(filter));
+        }
     }
 
     private void startWebview(int position) {

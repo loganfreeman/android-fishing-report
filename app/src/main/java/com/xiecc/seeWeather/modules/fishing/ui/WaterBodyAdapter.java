@@ -36,6 +36,11 @@ public class WaterBodyAdapter extends BaseAdapter {
         this.inflater = LayoutInflater.from(this.context);
     }
 
+    @TargetApi(Build.VERSION_CODES.N)
+    public List<WaterBody> filterByStatus(String query) {
+        return this.items.stream().filter(item -> item.getStatus().equals(query)).collect(Collectors.toList());
+    }
+
     public WaterBody search(String query) {
         WaterBody found = null;
         outerloop:
