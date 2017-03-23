@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.xiecc.seeWeather">
+    package="com.loganfreeman.utahfishing">
 
     <!--用于进行网络定位-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -23,7 +23,7 @@
 
 
     <application
-        android:name="com.xiecc.seeWeather.base.BaseApplication"
+        android:name="com.loganfreeman.utahfishing.base.BaseApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -48,11 +48,11 @@
             android:value="@string/google_maps_api_key"/>
 
         <service android:name="com.amap.api.location.APSService"/>
-        <service android:name=".modules.service.AutoUpdateService"/>
+        <service android:name="com.loganfreeman.utahfishing.modules.service.AutoUpdateService"/>
 
 
         <activity
-            android:name=".modules.launch.FirstActivity"
+            android:name="com.loganfreeman.utahfishing.modules.launch.FirstActivity"
             android:theme="@style/FirstTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -60,44 +60,44 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".modules.main.ui.MainActivity"
+            android:name="com.loganfreeman.utahfishing.modules.main.ui.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
         <activity
-            android:name=".modules.setting.ui.SettingActivity"
+            android:name="com.loganfreeman.utahfishing.modules.setting.ui.SettingActivity"
             android:screenOrientation="portrait"
             />
         <activity
-            android:name=".modules.city.ui.ChoiceCityActivity"
+            android:name="com.loganfreeman.utahfishing.modules.city.ui.ChoiceCityActivity"
             android:screenOrientation="portrait"
             />
         <activity
-            android:name=".modules.about.ui.AboutActivity"
+            android:name="com.loganfreeman.utahfishing.modules.about.ui.AboutActivity"
             android:screenOrientation="portrait"
             />
 
-        <activity android:name=".modules.main.ui.StockReportActivity"
+        <activity android:name="com.loganfreeman.utahfishing.modules.main.ui.StockReportActivity"
             android:theme="@style/Theme.AppCompat.Light">
 
         </activity>
 
-        <activity android:name=".modules.main.ui.FishingReportActivity"
+        <activity android:name="com.loganfreeman.utahfishing.modules.main.ui.FishingReportActivity"
             android:theme="@style/Theme.AppCompat.Light">
 
         </activity>
 
-        <activity android:name=".modules.main.ui.StockReportListActivity"
+        <activity android:name="com.loganfreeman.utahfishing.modules.main.ui.StockReportListActivity"
             android:theme="@style/Theme.AppCompat.Light">
 
         </activity>
 
-        <activity android:name=".modules.main.ui.ReportFilterActivity"
+        <activity android:name="com.loganfreeman.utahfishing.modules.main.ui.ReportFilterActivity"
             android:theme="@style/Theme.AppCompat.Light">
 
         </activity>
 
-        <activity android:name=".modules.main.ui.FishingReportListActivity"
+        <activity android:name="com.loganfreeman.utahfishing.modules.main.ui.FishingReportListActivity"
             android:theme="@style/Theme.AppCompat.Light">
 
         </activity>

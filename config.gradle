@@ -2,7 +2,7 @@ ext {
     android = [
         compileSdkVersion: 25,
         buildToolsVersion: "25.0.1",
-        applicationId    : "com.xiecc.seeWeather",
+        applicationId    : "com.loganfreeman.utahfishing",
         minSdkVersion    : 19, // Android 4.4 Kitkat
         targetSdkVersion : 25,
         versionCode      : 34,

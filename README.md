@@ -49,9 +49,9 @@
 
 Fir.im: http://fir.im/seeWeather
 
-酷安市场：http://www.coolapk.com/apk/com.xiecc.seeWeather
+酷安市场：http://www.coolapk.com/apk/utahfishing
 
-豌豆荚：http://www.wandoujia.com/apps/com.xiecc.seeWeather
+豌豆荚：http://www.wandoujia.com/apps/utahfishing
 
 v2.3
 - [新增] 卡片 UI（含有北京，上海，苏州）

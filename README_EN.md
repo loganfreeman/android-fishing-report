@@ -42,11 +42,11 @@ Permission Description
 
 Fir.im: http://fir.im/seeWeather
 
-Wandoujia：http://www.wandoujia.com/apps/com.xiecc.seeWeather
+Wandoujia：http://www.wandoujia.com/apps/utahfishing
 
 Flyme： http://developer.meizu.com/console/apps/detail/6530883
 
-Kuan：http://www.coolapk.com/apk/com.xiecc.seeWeather
+Kuan：http://www.coolapk.com/apk/utahfishing
 
 
 
