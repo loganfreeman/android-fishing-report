@@ -3,6 +3,7 @@ package com.xiecc.seeWeather.modules.main.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.webkit.WebView;
 
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.BaseActivity;
@@ -12,6 +13,7 @@ import com.xiecc.seeWeather.modules.fishing.domain.WaterBody;
 
 import org.parceler.Parcels;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 import static java.nio.charset.CodingErrorAction.REPORT;
@@ -24,6 +26,9 @@ public class FishingReportActivity extends BaseChildActivity {
 
     public static final String WATER_BODY = "water_body";
     private WaterBody waterBody;
+
+    @Bind(R.id.webview)
+    WebView webView;
 
     public static void start(Context context, WaterBody waterBody) {
         Intent intent = new Intent(context, FishingReportActivity.class);
@@ -44,5 +49,6 @@ public class FishingReportActivity extends BaseChildActivity {
     }
 
     private void initView() {
+        webView.loadUrl(waterBody.getUrl());
     }
 }
