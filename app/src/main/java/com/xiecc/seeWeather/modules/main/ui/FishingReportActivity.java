@@ -12,13 +12,19 @@ import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.BaseActivity;
 import com.xiecc.seeWeather.base.BaseChildActivity;
 import com.xiecc.seeWeather.common.PLog;
+import com.xiecc.seeWeather.common.utils.SharedPreferenceUtil;
+import com.xiecc.seeWeather.common.utils.StringUtils;
+import com.xiecc.seeWeather.common.utils.ToastUtil;
 import com.xiecc.seeWeather.modules.fishing.domain.WaterBody;
 
 import org.parceler.Parcels;
 
+import java.util.Set;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+import static com.xiecc.seeWeather.common.utils.SharedPreferenceUtil.FAVORITE_WATRER;
 import static java.nio.charset.CodingErrorAction.REPORT;
 
 /**
@@ -38,6 +44,9 @@ public class FishingReportActivity extends BaseChildActivity {
 
     @Bind(R.id.bt_share)
     ImageView btnShare;
+
+    @Bind(R.id.bt_favorite)
+    ImageView btnFavorite;
 
     public static void start(Context context, WaterBody waterBody) {
         Intent intent = new Intent(context, FishingReportActivity.class);
@@ -72,6 +81,20 @@ public class FishingReportActivity extends BaseChildActivity {
                 shareTextUrl();
             }
         });
+
+        btnFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveFavorite();
+            }
+        });
+    }
+
+    private void saveFavorite() {
+        Set<String> values = SharedPreferenceUtil.getInstance().getStringSet(FAVORITE_WATRER);
+        values.add(waterBody.getName());
+        SharedPreferenceUtil.getInstance().putStringSet(FAVORITE_WATRER, values);
+        ToastUtil.showLong(String.format("Saved %s to your preferences", waterBody.getName()));
     }
 
     private void gotoLocation(double lat, double lon) {
@@ -92,5 +115,5 @@ public class FishingReportActivity extends BaseChildActivity {
 
         startActivity(Intent.createChooser(share, "Share link!"));
     }
-    
+
 }

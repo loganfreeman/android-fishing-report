@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import com.xiecc.seeWeather.base.BaseApplication;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by hugo on 2016/2/19 0019.
  *
@@ -21,6 +24,8 @@ public class SharedPreferenceUtil {
     public static final String NOTIFICATION_MODEL = "notification_model";
     public static final String ANIM_START = "animation_start";
 
+    public static final String FAVORITE_WATRER = "favorite_water";
+
     public static int ONE_HOUR = 1000 * 60 * 60;
 
     private SharedPreferences mPrefs;
@@ -35,6 +40,15 @@ public class SharedPreferenceUtil {
 
     private SharedPreferenceUtil() {
         mPrefs = BaseApplication.getAppContext().getSharedPreferences("setting", Context.MODE_PRIVATE);
+    }
+
+    public SharedPreferenceUtil putStringSet(String key, Set<String> values) {
+        mPrefs.edit().putStringSet(key, values).apply();
+        return this;
+    }
+
+    public Set<String> getStringSet(String key) {
+        return mPrefs.getStringSet(key, new HashSet<String>());
     }
 
     public SharedPreferenceUtil putInt(String key, int value) {

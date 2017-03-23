@@ -230,6 +230,9 @@ public class MainActivity extends BaseActivity implements
                             case R.id.nav_about:
                                 AboutActivity.launch(MainActivity.this);
                                 break;
+                            case R.id.nav_favorite:
+                                FishingReportListActivity.gotoFavorite(getApplicationContext());
+                                break;
 
                         }
                     }

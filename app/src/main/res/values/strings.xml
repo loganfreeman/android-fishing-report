@@ -56,5 +56,6 @@
     <string name="avg_len">Average Length</string>
     <string name="stock_date">Stock Date</string>
     <string name="send_to">Share</string>
+    <string name="favorite">My favorite</string>
 
 </resources>

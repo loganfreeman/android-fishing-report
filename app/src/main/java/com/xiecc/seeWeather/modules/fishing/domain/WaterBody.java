@@ -23,6 +23,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -126,6 +127,11 @@ public class WaterBody implements Serializable, ClusterItem {
             }
         }
         return found;
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    public static List<WaterBody> getFavorites(List<WaterBody> items, Set<String> favorites) {
+        return items.stream().filter(item -> favorites.contains(item.getName())).collect(Collectors.toList());
     }
 
     @TargetApi(Build.VERSION_CODES.N)

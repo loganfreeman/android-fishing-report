@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.BaseChildActivity;
+import com.xiecc.seeWeather.common.utils.SharedPreferenceUtil;
 import com.xiecc.seeWeather.modules.fishing.domain.WaterBody;
 import com.xiecc.seeWeather.modules.fishing.ui.WaterBodyAdapter;
 
@@ -18,7 +21,11 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
+import static com.xiecc.seeWeather.common.utils.SharedPreferenceUtil.FAVORITE_WATRER;
 
 
 /**
@@ -32,6 +39,28 @@ public class FishingReportListActivity extends BaseChildActivity {
 
     @Bind(R.id.listview)
     ListView listview;
+
+
+    public static void gotoFavorite(Context context) {
+        WaterBody.getWaterbodiesAsync2()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<List<WaterBody>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(List<WaterBody> waterBodies) {
+                start(context, WaterBody.getFavorites(waterBodies, SharedPreferenceUtil.getInstance().getStringSet(FAVORITE_WATRER)));
+            }
+        });
+    }
 
     public static void start(Context context, List<WaterBody> hotspots) {
         Intent intent = new Intent(context, FishingReportListActivity.class);
@@ -53,5 +82,11 @@ public class FishingReportListActivity extends BaseChildActivity {
         safeSetTitle(getString(R.string.utah_fishing_report));
         WaterBodyAdapter adapter = new WaterBodyAdapter(this, hotspots);
         listview.setAdapter(adapter);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                FishingReportActivity.start(FishingReportListActivity.this, adapter.getItem(position));
+            }
+        });
     }
 }
