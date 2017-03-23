@@ -1,5 +1,6 @@
 package com.xiecc.seeWeather.modules.main.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
@@ -30,6 +31,8 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static com.xiecc.seeWeather.modules.main.ui.ReportFilterActivity.RESULT_CODE;
+
 
 /**
  * Created by shanhong on 3/21/17.
@@ -48,6 +51,30 @@ public class StockReportFragment extends AbstractBaseFragment {
     @Override
     protected void lazyLoad() {
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                break;
+            case R.id.action_filter:
+                //ReportFilterActivity.start(getActivity(), adapter.getFilter());
+                startActivityForResult(ReportFilterActivity.getIntent(getActivity(), simpleRecyclerViewAdapter.getFilter()), RESULT_CODE);
+                break;
+            default:
+                break;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if( requestCode == RESULT_CODE ) {
+            String filter = data.getStringExtra("MESSAGE");
+            StockReportListActivity.start(getActivity(), simpleRecyclerViewAdapter.filterByCounty(filter));
+        }
     }
 
     @Nullable

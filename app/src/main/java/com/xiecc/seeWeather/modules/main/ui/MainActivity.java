@@ -230,9 +230,6 @@ public class MainActivity extends BaseActivity implements
                             case R.id.nav_about:
                                 AboutActivity.launch(MainActivity.this);
                                 break;
-                            case R.id.nav_city:
-                                ChoiceCityActivity.launch(MainActivity.this);
-                                break;
 
                         }
                     }

@@ -1,5 +1,7 @@
 package com.xiecc.seeWeather.modules.fishing.ui;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +11,12 @@ import android.widget.TextView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.xiecc.seeWeather.R;
+import com.xiecc.seeWeather.modules.fishing.domain.ReportFilter;
 import com.xiecc.seeWeather.modules.fishing.domain.StockReport;
+import com.xiecc.seeWeather.modules.fishing.domain.WaterBody;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by shanhong on 3/22/17.
@@ -78,6 +83,17 @@ public class SimpleAdapter extends UltimateViewAdapter {
 
     public List<StockReport> search(String query) {
         return StockReport.search(this.stockReports, query);
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    public ReportFilter getFilter() {
+        ReportFilter filter = new ReportFilter();
+        filter.getStatuses().addAll(stockReports.stream().map(StockReport::getCounty).distinct().collect(Collectors.toList()));
+        return filter;
+    }
+
+    public List<StockReport> filterByCounty(String filter) {
+        return StockReport.filterByCounty(this.stockReports, filter);
     }
 
     class ViewHolder extends UltimateRecyclerviewViewHolder {

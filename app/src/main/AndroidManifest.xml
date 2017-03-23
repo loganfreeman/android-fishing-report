@@ -92,7 +92,7 @@
 
         </activity>
 
-        <activity android:name=".modules.main.ui.FishingReportFilterActivity"
+        <activity android:name=".modules.main.ui.ReportFilterActivity"
             android:theme="@style/Theme.AppCompat.Light">
 
         </activity>

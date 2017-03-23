@@ -1,5 +1,7 @@
 package com.xiecc.seeWeather.modules.fishing.domain;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import rx.Observable;
 import rx.subjects.AsyncSubject;
@@ -44,11 +47,20 @@ public class StockReport implements Parcelable {
     public double length;
     public Date stockdate;
 
+    public String getCounty() {
+        return county;
+    }
+
     public static Observable<List<StockReport>> getStockReportAsync() {
         Observable<List<StockReport>> firstTimeObservable =
                 Observable.fromCallable(StockReport::fromWildlife);
 
         return firstTimeObservable.concatWith(mSubject);
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    public static List<StockReport> filterByCounty(List<StockReport> items, String query) {
+        return items.stream().filter(item -> item.county.equalsIgnoreCase(query)).collect(Collectors.toList());
     }
 
     public static List<StockReport> search(List<StockReport> items, String query) {
@@ -151,4 +163,6 @@ public class StockReport implements Parcelable {
             return new StockReport[size];
         }
     };
+
+
 }

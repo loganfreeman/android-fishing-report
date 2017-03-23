@@ -2,8 +2,6 @@ package com.xiecc.seeWeather.modules.main.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,13 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.AbstractBaseFragment;
-import com.xiecc.seeWeather.common.utils.ToastUtil;
 import com.xiecc.seeWeather.modules.fishing.domain.WaterBody;
 import com.xiecc.seeWeather.modules.fishing.ui.WaterBodyAdapter;
 
@@ -34,12 +29,11 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static com.xiecc.seeWeather.modules.main.ui.FishingReportFilterActivity.RESULT_CODE;
+import static com.xiecc.seeWeather.modules.main.ui.ReportFilterActivity.RESULT_CODE;
 
 
 /**
@@ -125,8 +119,8 @@ public class FishingReportFragment extends AbstractBaseFragment {
             case R.id.action_search:
                 break;
             case R.id.action_filter:
-                //FishingReportFilterActivity.start(getActivity(), adapter.getFilter());
-                startActivityForResult(FishingReportFilterActivity.getIntent(getActivity(), adapter.getFilter()), RESULT_CODE);
+                //ReportFilterActivity.start(getActivity(), adapter.getFilter());
+                startActivityForResult(ReportFilterActivity.getIntent(getActivity(), adapter.getFilter()), RESULT_CODE);
                 break;
             default:
                 break;
