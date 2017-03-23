@@ -2,6 +2,7 @@ package com.xiecc.seeWeather.modules.main.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,8 @@ import com.xiecc.seeWeather.modules.fishing.domain.WaterBody;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import butterknife.Bind;
@@ -91,9 +94,10 @@ public class FishingReportActivity extends BaseChildActivity {
     }
 
     private void saveFavorite() {
-        Set<String> values = SharedPreferenceUtil.getInstance().getStringSet(FAVORITE_WATRER);
-        values.add(waterBody.getName());
-        SharedPreferenceUtil.getInstance().putStringSet(FAVORITE_WATRER, values);
+        List<WaterBody> favorites = new ArrayList<WaterBody>();
+        SharedPreferences editor = SharedPreferenceUtil.getInstance().get();
+        Bundle bundle = SharedPreferenceUtil.loadPreferencesBundle(editor, FAVORITE_WATRER);
+
         ToastUtil.showLong(String.format("Saved %s to your preferences", waterBody.getName()));
     }
 
