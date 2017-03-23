@@ -78,49 +78,7 @@
             android:columnCount="2"
             android:layout_marginBottom="6dp"
             >
-            <Button
-                android:id="@+id/bt_code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:drawablePadding="12dp"
-                android:drawableStart="@drawable/code"
-                android:gravity="start|center_vertical"
-                android:text="查看项目源码"
-                android:textColor="@color/defaultTextColor"
-                tools:targetApi="lollipop"
-                android:paddingEnd="12dp"
-                android:paddingStart="12dp"/>
 
-            <Button
-                android:paddingEnd="12dp"
-                android:paddingStart="12dp"
-                android:id="@+id/bt_blog"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:drawablePadding="12dp"
-                android:drawableStart="@drawable/home"
-                android:gravity="start|center_vertical"
-                android:text="查看个人博客"
-                android:textColor="@color/defaultTextColor"
-                tools:targetApi="lollipop"/>
-            <Button
-                android:paddingEnd="12dp"
-                android:paddingStart="12dp"
-                android:id="@+id/bt_pay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:drawablePadding="12dp"
-                android:drawableStart="@drawable/pay"
-                android:gravity="start|center_vertical"
-                android:text="随意捐赠支持"
-                android:textColor="@color/defaultTextColor"
-                tools:targetApi="lollipop"/>
 
             <Button
                 android:paddingEnd="12dp"
@@ -150,20 +108,7 @@
                 android:text="检查软件更新"
                 android:textColor="@color/defaultTextColor"
                 tools:targetApi="lollipop"/>
-            <Button
-                android:paddingEnd="12dp"
-                android:paddingStart="12dp"
-                android:id="@+id/bt_bug"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:drawablePadding="12dp"
-                android:drawableStart="@drawable/bug"
-                android:gravity="start|center_vertical"
-                android:text="意见错误反馈"
-                android:textColor="@color/defaultTextColor"
-                tools:targetApi="lollipop"/>
+
 
         </GridLayout>
 
