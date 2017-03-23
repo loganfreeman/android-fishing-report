@@ -2,8 +2,11 @@ package com.xiecc.seeWeather.modules.main.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.ImageView;
 
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.BaseActivity;
@@ -30,6 +33,9 @@ public class FishingReportActivity extends BaseChildActivity {
     @Bind(R.id.webview)
     WebView webView;
 
+    @Bind(R.id.bt_direction)
+    ImageView btnDirection;
+
     public static void start(Context context, WaterBody waterBody) {
         Intent intent = new Intent(context, FishingReportActivity.class);
         intent.putExtra(WATER_BODY, Parcels.wrap(waterBody));
@@ -50,5 +56,20 @@ public class FishingReportActivity extends BaseChildActivity {
 
     private void initView() {
         webView.loadUrl(waterBody.getUrl());
+        btnDirection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoLocation(waterBody.getLatitude(), waterBody.getLongitude());
+            }
+        });
+    }
+
+    private void gotoLocation(double lat, double lon) {
+        Uri gmmIntentUri = Uri.parse(String.format("geo:%f,%f", lat, lon));
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        }
     }
 }
