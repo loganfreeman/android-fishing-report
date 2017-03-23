@@ -99,6 +99,8 @@ dependencies {
 
     compile 'com.marshalchen.ultimaterecyclerview:library:0.7.2'
 
+    compile 'com.google.android:flexbox:0.3.0-alpha2'
+
 
 
 }

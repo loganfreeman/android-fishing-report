@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" android:id="@+id/itemview">
+    android:layout_height="wrap_content"
+    android:id="@+id/itemview"
+    android:background="@drawable/bottom_border">
 
     <RelativeLayout
         android:id="@+id/top"
@@ -21,10 +23,13 @@
 
         <TextView
             android:id="@+id/county"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textColor="@color/bb_darkBackgroundColor"
+            android:textSize="18sp"
+            android:textStyle="bold|italic" />
 
     </RelativeLayout>
 
@@ -41,19 +46,26 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp">
+
             <TextView
                 android:id="@+id/species"
-                android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"/>
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/darkred"
+                android:textSize="18sp"
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:id="@+id/quantity"
-                android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/orange"
+                android:textSize="18sp"
+                android:textStyle="italic" />
 
         </RelativeLayout>
 
