@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.BaseActivity;
 import com.xiecc.seeWeather.base.BaseChildActivity;
+import com.xiecc.seeWeather.common.InternalStorage;
 import com.xiecc.seeWeather.common.PLog;
 import com.xiecc.seeWeather.common.utils.SharedPreferenceUtil;
 import com.xiecc.seeWeather.common.utils.StringUtils;
@@ -20,6 +21,7 @@ import com.xiecc.seeWeather.modules.fishing.domain.WaterBody;
 
 import org.parceler.Parcels;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +29,7 @@ import java.util.Set;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+import static android.R.attr.entries;
 import static com.xiecc.seeWeather.common.utils.SharedPreferenceUtil.FAVORITE_WATRER;
 import static java.nio.charset.CodingErrorAction.REPORT;
 
@@ -94,11 +97,25 @@ public class FishingReportActivity extends BaseChildActivity {
     }
 
     private void saveFavorite() {
-        List<WaterBody> favorites = new ArrayList<WaterBody>();
-        SharedPreferences editor = SharedPreferenceUtil.getInstance().get();
-        Bundle bundle = SharedPreferenceUtil.loadPreferencesBundle(editor, FAVORITE_WATRER);
+
+        List<WaterBody> favorites = InternalStorage.getFavoriteWaterBodies(this);
+
+
+        for(WaterBody body : favorites) {
+            if(body.getName().equals(waterBody.getName())) {
+                ToastUtil.showLong(String.format("Your preference already contains %s", waterBody.getName()));
+                return;
+            }
+        }
+        favorites.add(waterBody);
+        try {
+            InternalStorage.writeObject(this, FAVORITE_WATRER, favorites);
+        } catch (IOException e) {
+            PLog.e(e.getLocalizedMessage());
+        }
 
         ToastUtil.showLong(String.format("Saved %s to your preferences", waterBody.getName()));
+
     }
 
     private void gotoLocation(double lat, double lon) {

@@ -10,12 +10,15 @@ import android.widget.ListView;
 
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.BaseChildActivity;
+import com.xiecc.seeWeather.common.InternalStorage;
+import com.xiecc.seeWeather.common.PLog;
 import com.xiecc.seeWeather.common.utils.SharedPreferenceUtil;
 import com.xiecc.seeWeather.modules.fishing.domain.WaterBody;
 import com.xiecc.seeWeather.modules.fishing.ui.WaterBodyAdapter;
 
 import org.parceler.Parcels;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,24 +45,11 @@ public class FishingReportListActivity extends BaseChildActivity {
 
 
     public static void gotoFavorite(Context context) {
-        WaterBody.getWaterbodiesAsync2()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<List<WaterBody>>() {
-            @Override
-            public void onCompleted() {
 
-            }
+        List<WaterBody> favorites = InternalStorage.getFavoriteWaterBodies(context);
 
-            @Override
-            public void onError(Throwable e) {
 
-            }
-
-            @Override
-            public void onNext(List<WaterBody> waterBodies) {
-                start(context, WaterBody.getFavorites(waterBodies, SharedPreferenceUtil.getInstance().getStringSet(FAVORITE_WATRER)));
-            }
-        });
+        start(context, favorites);
     }
 
     public static void start(Context context, List<WaterBody> hotspots) {
