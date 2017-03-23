@@ -55,5 +55,6 @@
     <string name="choose_report_filter">Choose a filter</string>
     <string name="avg_len">Average Length</string>
     <string name="stock_date">Stock Date</string>
+    <string name="send_to">Share</string>
 
 </resources>

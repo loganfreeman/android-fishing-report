@@ -36,6 +36,9 @@ public class FishingReportActivity extends BaseChildActivity {
     @Bind(R.id.bt_direction)
     ImageView btnDirection;
 
+    @Bind(R.id.bt_share)
+    ImageView btnShare;
+
     public static void start(Context context, WaterBody waterBody) {
         Intent intent = new Intent(context, FishingReportActivity.class);
         intent.putExtra(WATER_BODY, Parcels.wrap(waterBody));
@@ -62,6 +65,13 @@ public class FishingReportActivity extends BaseChildActivity {
                 gotoLocation(waterBody.getLatitude(), waterBody.getLongitude());
             }
         });
+
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareTextUrl();
+            }
+        });
     }
 
     private void gotoLocation(double lat, double lon) {
@@ -72,4 +82,15 @@ public class FishingReportActivity extends BaseChildActivity {
             startActivity(mapIntent);
         }
     }
+
+    private void shareTextUrl() {
+        Intent share = new Intent(android.content.Intent.ACTION_SEND);
+        share.setType("text/plain");
+
+        share.putExtra(Intent.EXTRA_SUBJECT, waterBody.getName());
+        share.putExtra(Intent.EXTRA_TEXT, waterBody.getUrl());
+
+        startActivity(Intent.createChooser(share, "Share link!"));
+    }
+    
 }
