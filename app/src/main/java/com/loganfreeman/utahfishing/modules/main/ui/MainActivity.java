@@ -157,6 +157,10 @@ public class MainActivity extends BaseActivity implements
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.contentContainer, new StockReportFragment()).commit();
                         break;
+                    case R.id.tab_calendar:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.contentContainer, new CalendarFragment()).commit();
+                        break;
                     default:
                         break;
                 }

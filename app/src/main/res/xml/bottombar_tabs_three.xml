@@ -14,4 +14,9 @@
         icon="@drawable/ic_favorites"
         title="Stock" />
 
+    <tab
+        id="@+id/tab_calendar"
+        icon="@drawable/ic_action_message"
+        title="Calendar" />
+
 </tabs>
