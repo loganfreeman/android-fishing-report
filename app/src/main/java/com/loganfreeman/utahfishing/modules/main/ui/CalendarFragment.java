@@ -49,7 +49,7 @@ import rx.schedulers.Schedulers;
 
 public class CalendarFragment extends AbstractBaseFragment implements OnDateSelectedListener, OnMonthChangedListener {
 
-    public static final DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+    List<StockReport> stockReports;
 
     @Bind(R.id.calendarView)
     MaterialCalendarView widget;
@@ -87,7 +87,8 @@ public class CalendarFragment extends AbstractBaseFragment implements OnDateSele
 
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-        widget.invalidateDecorators();
+        //widget.invalidateDecorators();
+        StockReportListActivity.start(getActivity(), StockReport.filterByCalendarDay(stockReports, date));
     }
 
     @Override
@@ -118,6 +119,8 @@ public class CalendarFragment extends AbstractBaseFragment implements OnDateSele
 
     @TargetApi(Build.VERSION_CODES.N)
     private void initCalendar(List<StockReport> stockReports) {
+
+        CalendarFragment.this.stockReports = stockReports;
 
         widget.setOnDateChangedListener(this);
         widget.setOnMonthChangedListener(this);

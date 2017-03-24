@@ -65,4 +65,11 @@ public class ExampleUnitTest {
         assertEquals(calendarDay.getMonth(), 2);
         assertEquals(calendarDay.getYear(), 2017);
     }
+
+    @Test
+    public void selectCalenday() {
+        String d = "03/11/2017";
+        CalendarDay calendarDay = Time.toCalendarDay(d);
+        assertEquals(CalendarDay.from(2017, 2, 11), calendarDay);
+    }
 }

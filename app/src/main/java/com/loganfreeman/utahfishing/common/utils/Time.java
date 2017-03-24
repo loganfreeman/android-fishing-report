@@ -41,7 +41,6 @@ public class Time {
         return CalendarDay.from(dmy.get(2), dmy.get(0) - 1, dmy.get(1));
     }
 
-
     /**
      * yyyy-MM-dd HH:mm:ss
      */

@@ -6,6 +6,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Pair;
 
+import com.loganfreeman.utahfishing.common.utils.Time;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import org.jsoup.Jsoup;
@@ -162,4 +163,8 @@ public class StockReport implements Parcelable {
     };
 
 
+    @TargetApi(Build.VERSION_CODES.N)
+    public static List<StockReport> filterByCalendarDay(List<StockReport> items, CalendarDay date) {
+        return items.stream().filter(item -> Time.toCalendarDay(item.stockdate).equals(date)).collect(Collectors.toList());
+    }
 }
