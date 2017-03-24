@@ -1,10 +1,15 @@
 package com.loganfreeman.utahfishing.common.utils;
 
 import android.annotation.SuppressLint;
+
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Time {
+
+    public static final DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+
 
     /**
      * yyyy-MM-dd HH:mm:ss

@@ -28,7 +28,9 @@ import rx.Observable;
 import rx.subjects.AsyncSubject;
 
 import static android.R.id.list;
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static java.util.Arrays.stream;
+import static com.loganfreeman.utahfishing.common.utils.Time.df;
 
 /**
  * Created by shanhong on 3/21/17.
@@ -40,9 +42,6 @@ public class StockReport implements Parcelable {
 
     private static final AsyncSubject<List<StockReport>> mSubject = AsyncSubject.create();
 
-    public static final DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
-
-    public static final Pattern dayMonYear = Pattern.compile("(\\d{2})/(\\d{2})/(\\d{4})");
 
     public String watername;
     public String county;

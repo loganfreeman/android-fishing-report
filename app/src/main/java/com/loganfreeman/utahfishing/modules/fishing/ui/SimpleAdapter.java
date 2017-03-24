@@ -17,6 +17,9 @@ import com.loganfreeman.utahfishing.modules.fishing.domain.StockReport;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.loganfreeman.utahfishing.common.utils.Time.df;
+
+
 /**
  * Created by shanhong on 3/22/17.
  */
@@ -66,7 +69,7 @@ public class SimpleAdapter extends UltimateViewAdapter {
         viewHolder.species.setText(report.species);
         viewHolder.quantity.setText(String.valueOf(report.quantity));
         viewHolder.length.setText(String.valueOf(report.length));
-        viewHolder.stockdate.setText(StockReport.df.format(report.stockdate));
+        viewHolder.stockdate.setText(df.format(report.stockdate));
 
     }
 
