@@ -27,12 +27,7 @@ import java.util.stream.Collectors;
 import rx.Observable;
 import rx.subjects.AsyncSubject;
 
-import static android.R.id.list;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
-import static java.util.Arrays.stream;
-import static com.loganfreeman.utahfishing.common.utils.Time.df;
 
-import static com.loganfreeman.utahfishing.common.utils.Time.getDate;
 
 /**
  * Created by shanhong on 3/21/17.
@@ -50,7 +45,7 @@ public class StockReport implements Parcelable {
     public String species;
     public int quantity;
     public double length;
-    public Date stockdate;
+    public String stockdate;
 
 
     public String getCounty() {
@@ -64,12 +59,6 @@ public class StockReport implements Parcelable {
         return firstTimeObservable.concatWith(mSubject);
     }
 
-    public static Pair<Date, Date> getMinMax(List<StockReport> list) {
-        Date min = list.stream().map(u -> u.stockdate).min(Date::compareTo).get();
-        Date max = list.stream().map(u -> u.stockdate).max(Date::compareTo).get();
-        Pair<Date, Date> pair = new Pair<Date, Date>(min, max);
-        return  pair;
-    }
 
     @TargetApi(Build.VERSION_CODES.N)
     public static List<StockReport> filterByCounty(List<StockReport> items, String query) {
@@ -124,8 +113,7 @@ public class StockReport implements Parcelable {
         report.species = element.select("td.species").first().text();
         report.quantity = Integer.parseInt(element.select("td.quantity").first().text());
         report.length = Double.parseDouble(element.select("td.length").first().text());
-        String stockdate = element.select("td.stockdate").first().text();
-        report.stockdate = getDate(stockdate);
+        report.stockdate = element.select("td.stockdate").first().text();
 
         return report;
     }
@@ -142,7 +130,7 @@ public class StockReport implements Parcelable {
         out.writeString(species);
         out.writeInt(quantity);
         out.writeDouble(length);
-        out.writeString(df.format(stockdate));
+        out.writeString(stockdate);
 
     }
 
@@ -156,7 +144,7 @@ public class StockReport implements Parcelable {
         species = in.readString();
         quantity = in.readInt();
         length = in.readDouble();
-        stockdate = getDate(in.readString());
+        stockdate = in.readString();
 
     }
 

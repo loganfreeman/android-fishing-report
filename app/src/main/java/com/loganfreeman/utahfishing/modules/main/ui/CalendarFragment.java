@@ -122,7 +122,7 @@ public class CalendarFragment extends AbstractBaseFragment implements OnDateSele
         widget.setOnDateChangedListener(this);
         widget.setOnMonthChangedListener(this);
 
-        List<Date> calendarDays = stockReports.stream().map( u -> u.stockdate ).collect(Collectors.toList());
+        List<String> calendarDays = stockReports.stream().map( u -> u.stockdate ).collect(Collectors.toList());
 
         //PLog.e(calendarDays.stream().map(Object::toString).collect(Collectors.joining("\n")));
 

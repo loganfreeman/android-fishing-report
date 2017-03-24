@@ -1,11 +1,20 @@
 package com.loganfreeman.utahfishing.common.utils;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.os.Build;
+
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.Arrays.stream;
 
 public class Time {
 
@@ -18,6 +27,13 @@ public class Time {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    public static CalendarDay toCalendarDay(String d) {
+        String[] parts = d.split("/");
+        List<Integer> dmy = Arrays.stream(parts).map(i -> Integer.parseInt(i)).collect(Collectors.toList());
+        return CalendarDay.from(dmy.get(2), dmy.get(0), dmy.get(1));
     }
 
 
