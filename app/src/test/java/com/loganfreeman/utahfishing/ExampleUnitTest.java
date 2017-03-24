@@ -5,6 +5,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import org.junit.Test;
 
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.Assert.*;
@@ -28,5 +29,16 @@ public class ExampleUnitTest {
         assertEquals(calendarDay.getDay(), 11);
         assertEquals(calendarDay.getMonth(), 3);
         assertEquals(calendarDay.getYear(), 2017);
+    }
+
+    @Test
+    public void testDate() throws ParseException {
+        Date d = df.parse("03/11/2017");
+        Calendar calendarDay = Calendar.getInstance();
+        calendarDay.setTime(d);
+        assertEquals(calendarDay.get(Calendar.DAY_OF_MONTH), 11);
+        assertEquals(calendarDay.get(Calendar.MONTH), 3);
+        assertEquals(calendarDay.get(Calendar.YEAR), 2017);
+
     }
 }

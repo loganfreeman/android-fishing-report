@@ -3,12 +3,22 @@ package com.loganfreeman.utahfishing.common.utils;
 import android.annotation.SuppressLint;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Time {
 
     public static final DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+
+    public static Date getDate(String date) {
+        try {
+            return df.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
     /**

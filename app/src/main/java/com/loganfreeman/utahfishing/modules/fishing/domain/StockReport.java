@@ -32,6 +32,8 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static java.util.Arrays.stream;
 import static com.loganfreeman.utahfishing.common.utils.Time.df;
 
+import static com.loganfreeman.utahfishing.common.utils.Time.getDate;
+
 /**
  * Created by shanhong on 3/21/17.
  */
@@ -96,14 +98,7 @@ public class StockReport implements Parcelable {
         return reports;
     }
 
-    public static Date getDate(String date) {
-        try {
-            return df.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 
     public static List<StockReport> fromWildlife() throws IOException {
         List<StockReport> reports = new ArrayList<StockReport>();
