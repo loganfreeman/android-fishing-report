@@ -1,5 +1,9 @@
 package com.loganfreeman.utahfishing.modules.main.ui;
 
+import android.annotation.TargetApi;
+import android.graphics.Color;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +16,11 @@ import android.view.ViewGroup;
 import com.loganfreeman.utahfishing.R;
 import com.loganfreeman.utahfishing.base.AbstractBaseFragment;
 import com.loganfreeman.utahfishing.common.PLog;
+import com.loganfreeman.utahfishing.common.decorators.EventDecorator;
+import com.loganfreeman.utahfishing.common.decorators.HighlightWeekendsDecorator;
+import com.loganfreeman.utahfishing.common.decorators.MySelectorDecorator;
+import com.loganfreeman.utahfishing.common.decorators.OneDayDecorator;
+import com.loganfreeman.utahfishing.common.utils.StringUtils;
 import com.loganfreeman.utahfishing.common.utils.ToastUtil;
 import com.loganfreeman.utahfishing.modules.fishing.domain.StockReport;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -19,8 +28,14 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,9 +49,12 @@ import rx.schedulers.Schedulers;
 
 public class CalendarFragment extends AbstractBaseFragment implements OnDateSelectedListener, OnMonthChangedListener {
 
+    public static final DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+
     @Bind(R.id.calendarView)
     MaterialCalendarView widget;
     private View view;
+
 
     @Override
     protected void lazyLoad() {
@@ -69,7 +87,7 @@ public class CalendarFragment extends AbstractBaseFragment implements OnDateSele
 
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-
+        widget.invalidateDecorators();
     }
 
     @Override
@@ -98,10 +116,25 @@ public class CalendarFragment extends AbstractBaseFragment implements OnDateSele
                 });
     }
 
+    @TargetApi(Build.VERSION_CODES.N)
     private void initCalendar(List<StockReport> stockReports) {
 
         widget.setOnDateChangedListener(this);
         widget.setOnMonthChangedListener(this);
+
+        List<CalendarDay> calendarDays = stockReports.stream().map( u -> u.getCalendarDay() ).collect(Collectors.toList());
+
+        //PLog.e(calendarDays.stream().map(Object::toString).collect(Collectors.joining("\n")));
+
+        //PLog.e(stockReports.stream().map(u -> df.format(u.stockdate)).collect(Collectors.joining("\n")));
+
+
+
+        widget.addDecorator(new EventDecorator(CalendarFragment.this.getActivity(), calendarDays));
+
+        widget.addDecorators(
+                new HighlightWeekendsDecorator()
+        );
 
     }
 }

@@ -6,6 +6,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Pair;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -16,14 +18,17 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import rx.Observable;
 import rx.subjects.AsyncSubject;
 
 import static android.R.id.list;
+import static java.util.Arrays.stream;
 
 /**
  * Created by shanhong on 3/21/17.
@@ -37,12 +42,17 @@ public class StockReport implements Parcelable {
 
     public static final DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
 
+    public static final Pattern dayMonYear = Pattern.compile("(\\d{2})/(\\d{2})/(\\d{4})");
+
     public String watername;
     public String county;
     public String species;
     public int quantity;
     public double length;
     public Date stockdate;
+    public int day;
+    public int month;
+    public int year;
 
     public String getCounty() {
         return county;
@@ -114,6 +124,7 @@ public class StockReport implements Parcelable {
         return reports;
     }
 
+    @TargetApi(Build.VERSION_CODES.N)
     private static StockReport fromElement(Element element) {
         StockReport report = new StockReport();
         report.watername = element.select("td.watername").first().text();
@@ -121,8 +132,18 @@ public class StockReport implements Parcelable {
         report.species = element.select("td.species").first().text();
         report.quantity = Integer.parseInt(element.select("td.quantity").first().text());
         report.length = Double.parseDouble(element.select("td.length").first().text());
-        report.stockdate = getDate(element.select("td.stockdate").first().text());
+        String stockdate = element.select("td.stockdate").first().text();
+        report.stockdate = getDate(stockdate);
+        // parse day, month, year
+        List<Integer> parts = Arrays.stream(stockdate.split("/")).map(u -> Integer.parseInt(u)).collect(Collectors.toList());
+        report.month = parts.get(0);
+        report.day = parts.get(1);
+        report.year = parts.get(2);
         return report;
+    }
+
+    public CalendarDay getCalendarDay() {
+        return CalendarDay.from(year, month, day);
     }
 
     @Override
