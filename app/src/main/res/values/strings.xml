@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">就看天气</string>
+    <string name="app_name">UTAH Fishing Report</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -57,5 +57,6 @@
     <string name="stock_date">Stock Date</string>
     <string name="send_to">Share</string>
     <string name="favorite">My favorite</string>
+    <string name="my_license">My license</string>
 
 </resources>

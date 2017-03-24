@@ -220,6 +220,9 @@ public class MainActivity extends BaseActivity implements
                             case R.id.nav_favorite:
                                 FishingReportListActivity.gotoFavorite(getApplicationContext());
                                 break;
+                            case R.id.nav_license:
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.nicusa.utdwrmobile&hl=en")));
+                                break;
 
                         }
                     }
