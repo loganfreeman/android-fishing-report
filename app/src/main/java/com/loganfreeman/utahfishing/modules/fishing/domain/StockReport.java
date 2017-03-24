@@ -50,9 +50,9 @@ public class StockReport implements Parcelable {
     public int quantity;
     public double length;
     public Date stockdate;
-    public int day;
+/*    public int day;
     public int month;
-    public int year;
+    public int year;*/
 
     public String getCounty() {
         return county;
@@ -135,16 +135,16 @@ public class StockReport implements Parcelable {
         String stockdate = element.select("td.stockdate").first().text();
         report.stockdate = getDate(stockdate);
         // parse day, month, year
-        List<Integer> parts = Arrays.stream(stockdate.split("/")).map(u -> Integer.parseInt(u)).collect(Collectors.toList());
+/*        List<Integer> parts = Arrays.stream(stockdate.split("/")).map(u -> Integer.parseInt(u)).collect(Collectors.toList());
         report.month = parts.get(0);
         report.day = parts.get(1);
-        report.year = parts.get(2);
+        report.year = parts.get(2);*/
         return report;
     }
 
-    public CalendarDay getCalendarDay() {
+/*    public CalendarDay getCalendarDay() {
         return CalendarDay.from(year, month, day);
-    }
+    }*/
 
     @Override
     public int describeContents() {
