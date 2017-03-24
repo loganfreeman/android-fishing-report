@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Pair;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -21,6 +22,8 @@ import java.util.stream.Collectors;
 
 import rx.Observable;
 import rx.subjects.AsyncSubject;
+
+import static android.R.id.list;
 
 /**
  * Created by shanhong on 3/21/17.
@@ -50,6 +53,13 @@ public class StockReport implements Parcelable {
                 Observable.fromCallable(StockReport::fromWildlife);
 
         return firstTimeObservable.concatWith(mSubject);
+    }
+
+    public static Pair<Date, Date> getMinMax(List<StockReport> list) {
+        Date min = list.stream().map(u -> u.stockdate).min(Date::compareTo).get();
+        Date max = list.stream().map(u -> u.stockdate).max(Date::compareTo).get();
+        Pair<Date, Date> pair = new Pair<Date, Date>(min, max);
+        return  pair;
     }
 
     @TargetApi(Build.VERSION_CODES.N)
