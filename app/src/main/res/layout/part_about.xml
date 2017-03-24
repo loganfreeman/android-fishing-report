@@ -32,13 +32,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="4dp"
             android:background="@color/lineColor"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:lineSpacingExtra="3dp"
-            android:text="@string/aboutContent"
-            />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.3dp"
@@ -81,6 +75,7 @@
 
 
             <Button
+                android:layout_columnSpan="2"
                 android:paddingEnd="12dp"
                 android:paddingStart="12dp"
                 android:id="@+id/bt_share"
@@ -91,7 +86,7 @@
                 android:drawablePadding="12dp"
                 android:drawableStart="@drawable/share"
                 android:gravity="start|center_vertical"
-                android:text="分享就看天气"
+                android:text="@string/share_fishing_app"
                 android:textColor="@color/defaultTextColor"
                 tools:targetApi="lollipop"/>
             <Button
@@ -100,7 +95,7 @@
                 android:id="@+id/bt_update"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
+                android:layout_marginStart="24dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:drawablePadding="12dp"
                 android:drawableStart="@drawable/update"
@@ -145,16 +140,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="4dp"
             android:background="@color/lineColor"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:autoLink="web"
-            android:lineSpacingExtra="6dp"
-            android:text="@string/open_source"
-            android:textColorLink="@color/cloudyText"
-            android:textSize="12sp"
-            />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.3dp"
