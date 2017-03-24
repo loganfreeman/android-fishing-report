@@ -68,10 +68,7 @@
             android:name="com.loganfreeman.utahfishing.modules.setting.ui.SettingActivity"
             android:screenOrientation="portrait"
             />
-        <activity
-            android:name="com.loganfreeman.utahfishing.modules.city.ui.ChoiceCityActivity"
-            android:screenOrientation="portrait"
-            />
+
         <activity
             android:name="com.loganfreeman.utahfishing.modules.about.ui.AboutActivity"
             android:screenOrientation="portrait"
