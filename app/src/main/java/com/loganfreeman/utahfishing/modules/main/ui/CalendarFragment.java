@@ -127,11 +127,6 @@ public class CalendarFragment extends AbstractBaseFragment implements OnDateSele
 
         List<String> calendarDays = stockReports.stream().map( u -> u.stockdate ).collect(Collectors.toList());
 
-        //PLog.e(calendarDays.stream().map(Object::toString).collect(Collectors.joining("\n")));
-
-        //PLog.e(stockReports.stream().map(u -> df.format(u.stockdate)).collect(Collectors.joining("\n")));
-
-
 
         widget.addDecorator(new EventDecorator(Color.RED, calendarDays));
 

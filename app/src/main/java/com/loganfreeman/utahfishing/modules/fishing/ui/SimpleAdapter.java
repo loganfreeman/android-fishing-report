@@ -69,7 +69,7 @@ public class SimpleAdapter extends UltimateViewAdapter {
         viewHolder.species.setText(report.species);
         viewHolder.quantity.setText(String.valueOf(report.quantity));
         viewHolder.length.setText(String.valueOf(report.length));
-        viewHolder.stockdate.setText(df.format(report.stockdate));
+        viewHolder.stockdate.setText(report.stockdate);
 
     }
 
