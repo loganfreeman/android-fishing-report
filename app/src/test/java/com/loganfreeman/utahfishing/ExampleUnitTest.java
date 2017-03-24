@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.loc.e.d;
 import static org.junit.Assert.*;
 
 import static com.loganfreeman.utahfishing.common.utils.Time.df;
@@ -50,7 +51,18 @@ public class ExampleUnitTest {
         String d = "03/11/2017";
         CalendarDay calendarDay = Time.toCalendarDay(d);
         assertEquals(calendarDay.getDay(), 11);
-        assertEquals(calendarDay.getMonth(), 3);
+        assertEquals(calendarDay.getMonth(), 2);
+        assertEquals(calendarDay.getYear(), 2017);
+    }
+
+    @Test
+    public  void calendarDay() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2017, 2, 11);
+        System.out.println(calendar.getTime().toString());
+        CalendarDay calendarDay = CalendarDay.from(calendar);
+        assertEquals(calendarDay.getDay(), 11);
+        assertEquals(calendarDay.getMonth(), 2);
         assertEquals(calendarDay.getYear(), 2017);
     }
 }

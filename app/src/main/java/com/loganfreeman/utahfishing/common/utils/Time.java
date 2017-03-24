@@ -29,11 +29,16 @@ public class Time {
         return null;
     }
 
+    /**
+     * because calendar month starts from 0
+     * @param d
+     * @return
+     */
     @TargetApi(Build.VERSION_CODES.N)
     public static CalendarDay toCalendarDay(String d) {
         String[] parts = d.split("/");
         List<Integer> dmy = Arrays.stream(parts).map(i -> Integer.parseInt(i)).collect(Collectors.toList());
-        return CalendarDay.from(dmy.get(2), dmy.get(0), dmy.get(1));
+        return CalendarDay.from(dmy.get(2), dmy.get(0) - 1, dmy.get(1));
     }
 
 
