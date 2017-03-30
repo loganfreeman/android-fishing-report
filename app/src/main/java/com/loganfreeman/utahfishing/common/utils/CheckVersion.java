@@ -36,25 +36,25 @@ public class CheckVersion {
                     if (currentVersionName.compareTo(firVersionName) < 0) {
                         showUpdateDialog(versionAPI, context);
                     } else {
-                        ToastUtil.showShort("已经是最新版本(⌐■_■)");
+                        ToastUtil.showShort("Already the most recent version(⌐■_■)");
                     }
                 }
             });
     }
 
     public static void showUpdateDialog(VersionAPI versionAPI, final Context context) {
-        String title = "发现新版" + versionAPI.name + "版本号：" + versionAPI.versionShort;
+        String title = "Find new version " + versionAPI.name + " Version number：" + versionAPI.versionShort;
 
         new AlertDialog.Builder(context).setTitle(title)
             .setMessage(versionAPI.changelog)
-            .setPositiveButton("下载", (dialog, which) -> {
+            .setPositiveButton("Download", (dialog, which) -> {
                 Uri uri = Uri.parse(versionAPI.updateUrl);   //指定网址
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);           //指定Action
                 intent.setData(uri);                            //设置Uri
                 context.startActivity(intent);        //启动Activity
             })
-            .setNegativeButton("跳过此版本", new DialogInterface.OnClickListener() {
+            .setNegativeButton("Skip this version", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     SharedPreferenceUtil.getInstance().putString("version", versionAPI.versionShort);

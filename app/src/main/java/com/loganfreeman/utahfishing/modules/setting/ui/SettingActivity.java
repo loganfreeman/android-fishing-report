@@ -19,7 +19,7 @@ public class SettingActivity extends ToolbarActivity {
         //mToolbar.setTitle("设置"); don't work and i find this
         //http://stackoverflow.com/questions/26486730/in-android-app-toolbar-settitle-method-has-no-effect-application-name-is
         // -shown
-        getToolbar().setTitle("设置");
+        getToolbar().setTitle("Setting");
         getFragmentManager().beginTransaction().replace(R.id.framelayout, new SettingFragment()).commit();
     }
 

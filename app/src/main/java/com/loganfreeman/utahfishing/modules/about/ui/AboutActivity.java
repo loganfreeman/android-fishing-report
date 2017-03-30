@@ -30,8 +30,7 @@ public class AboutActivity extends BaseActivity {
 
     @Bind(R.id.bt_share)
     Button mBtShare;
-    @Bind(R.id.bt_update)
-    Button mBtUpdate;
+
 
 
     @Override
@@ -48,7 +47,7 @@ public class AboutActivity extends BaseActivity {
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
-        mTvVersion.setText(String.format("当前版本: %s (Build %s)", Util.getVersion(this), Util.getVersionCode(this)));
+        mTvVersion.setText(String.format("Current version: %s (Build %s)", Util.getVersion(this), Util.getVersionCode(this)));
         mToolbarLayout.setTitleEnabled(false);
         // TODO: 2016/12/4 这里有个 bug
         //mToolbarLayout.setTitle(getString(R.string.app_name));
@@ -65,14 +64,11 @@ public class AboutActivity extends BaseActivity {
         }
     }
 
-    @OnClick({ R.id.bt_share, R.id.bt_update })
+    @OnClick({ R.id.bt_share })
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_share:
                 gotoPlayStore();
-                break;
-            case R.id.bt_update:
-                CheckVersion.checkVersion(this, true);
                 break;
         }
     }

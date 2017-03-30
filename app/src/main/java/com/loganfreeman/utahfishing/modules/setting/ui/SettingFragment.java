@@ -73,7 +73,7 @@ public class SettingFragment extends PreferenceFragment
                 @Override
                 public void onNext(Boolean aBoolean) {
                     mClearCache.setSummary(FileSizeUtil.getAutoFileOrFilesSize(BaseApplication.getAppCacheDir() + "/NetCache"));
-                    Snackbar.make(getView(), "缓存已清除", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(getView(), "Cache cleared", Snackbar.LENGTH_SHORT).show();
                 }
             });
         }

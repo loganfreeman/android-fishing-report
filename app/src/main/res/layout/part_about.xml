@@ -22,7 +22,7 @@
             android:drawablePadding="4dp"
             android:drawableStart="@drawable/about_1"
             android:gravity="center"
-            android:text="很高兴认识你"
+            android:text="Glad that you use UTAH fishing report"
             android:textColor="@color/aboutIcon"
             android:textSize="15sp"/>
         <View
@@ -55,7 +55,7 @@
             android:drawablePadding="4dp"
             android:drawableStart="@drawable/about_2"
             android:gravity="center"
-            android:text="一切都很值得"
+            android:text="Everything is worthwhile"
             android:textColor="@color/aboutIcon"
             android:textSize="15sp"/>
         <View
@@ -89,20 +89,7 @@
                 android:text="@string/share_fishing_app"
                 android:textColor="@color/defaultTextColor"
                 tools:targetApi="lollipop"/>
-            <Button
-                android:paddingEnd="12dp"
-                android:paddingStart="12dp"
-                android:id="@+id/bt_update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:drawablePadding="12dp"
-                android:drawableStart="@drawable/update"
-                android:gravity="start|center_vertical"
-                android:text="检查软件更新"
-                android:textColor="@color/defaultTextColor"
-                tools:targetApi="lollipop"/>
+
 
 
         </GridLayout>
@@ -130,7 +117,7 @@
             android:drawablePadding="4dp"
             android:drawableStart="@drawable/about_3"
             android:gravity="center"
-            android:text="感谢开源的世界和开放的资源"
+            android:text="Grateful for the open source community"
             android:textColor="@color/aboutIcon"
             android:textSize="15sp"/>
         <View
