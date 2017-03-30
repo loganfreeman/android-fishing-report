@@ -97,7 +97,7 @@ public class MainActivity extends BaseActivity implements
         PLog.i("onCreate");
         initView();
         initDrawer();
-        startService(new Intent(this, AutoUpdateService.class));
+        // startService(new Intent(this, AutoUpdateService.class));
     }
 
     public static void launch(Context context) {
