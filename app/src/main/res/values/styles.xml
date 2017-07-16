@@ -36,4 +36,10 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+
+    <style name="MyTextView" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/colorSunrise</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>
