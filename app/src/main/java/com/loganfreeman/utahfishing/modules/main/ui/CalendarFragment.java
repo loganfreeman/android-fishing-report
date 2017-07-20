@@ -1,6 +1,7 @@
 package com.loganfreeman.utahfishing.modules.main.ui;
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -55,10 +56,26 @@ public class CalendarFragment extends AbstractBaseFragment implements OnDateSele
     MaterialCalendarView widget;
     private View view;
 
+    ProgressDialog progress;
+
+
 
     @Override
     protected void lazyLoad() {
 
+    }
+
+    private void showLoading() {
+        progress = new ProgressDialog(this.getActivity());
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+        progress.show();
+    }
+
+    private void dismissLoading() {
+        progress.dismiss();
+        progress = null;
     }
 
     @Nullable
@@ -97,6 +114,8 @@ public class CalendarFragment extends AbstractBaseFragment implements OnDateSele
     }
 
     private void load() {
+
+        showLoading();
         StockReport.getStockReportAsync().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<StockReport>>() {
@@ -133,6 +152,8 @@ public class CalendarFragment extends AbstractBaseFragment implements OnDateSele
         widget.addDecorators(
                 new HighlightWeekendsDecorator()
         );
+
+        dismissLoading();
 
     }
 }
