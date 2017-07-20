@@ -50,7 +50,7 @@ public class FishingReportFragment extends AbstractBaseFragment {
 
 
 
-    ProgressDialog mProgressDialog;
+    ProgressDialog progress;
 
 
     private View view;
@@ -79,7 +79,6 @@ public class FishingReportFragment extends AbstractBaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         safeSetTitle(getString(R.string.utah_fishing_report));
-        initView();
         load();
     }
 
@@ -120,7 +119,9 @@ public class FishingReportFragment extends AbstractBaseFragment {
                 break;
             case R.id.action_filter:
                 //ReportFilterActivity.start(getActivity(), adapter.getFilter());
-                startActivityForResult(ReportFilterActivity.getIntent(getActivity(), adapter.getFilter()), RESULT_CODE);
+                if(adapter != null) {
+                    startActivityForResult(ReportFilterActivity.getIntent(getActivity(), adapter.getFilter()), RESULT_CODE);
+                }
                 break;
             default:
                 break;
@@ -131,7 +132,7 @@ public class FishingReportFragment extends AbstractBaseFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if( requestCode == RESULT_CODE ) {
+        if( requestCode == RESULT_CODE && data != null ) {
             String filter = data.getStringExtra("MESSAGE");
             FishingReportListActivity.start(getActivity(), adapter.filterByStatus(filter));
         }
@@ -142,8 +143,22 @@ public class FishingReportFragment extends AbstractBaseFragment {
         startActivity(browserIntent);
     }
 
+    private void showLoading() {
+        progress = new ProgressDialog(this.getActivity());
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+        progress.show();
+    }
+
+    private void dismissLoading() {
+        progress.dismiss();
+        progress = null;
+    }
+
 
     private void load() {
+        showLoading();
         WaterBody.getWaterbodiesAsync2()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<List<WaterBody>>() {
@@ -159,16 +174,15 @@ public class FishingReportFragment extends AbstractBaseFragment {
 
             @Override
             public void onNext(List<WaterBody> waterBodies) {
-                WaterBodyAdapter adapter = new WaterBodyAdapter(FishingReportFragment.this.getActivity(), waterBodies);
-                listview.setAdapter(adapter);
-                FishingReportFragment.this.adapter = adapter;
+                initView(waterBodies);
+
             }
         });
     }
 
 
 
-    private void initView() {
+    private void initView(List<WaterBody> waterBodies) {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -176,6 +190,11 @@ public class FishingReportFragment extends AbstractBaseFragment {
 
             }
         });
+
+        WaterBodyAdapter adapter = new WaterBodyAdapter(FishingReportFragment.this.getActivity(), waterBodies);
+        listview.setAdapter(adapter);
+        FishingReportFragment.this.adapter = adapter;
+        dismissLoading();
     }
 
 
@@ -186,36 +205,5 @@ public class FishingReportFragment extends AbstractBaseFragment {
         ButterKnife.unbind(this);
     }
 
-    private class HotSpots extends AsyncTask<Void, Void, Void> {
 
-        List<WaterBody> hotSpots = null;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mProgressDialog = new ProgressDialog(getActivity());
-            mProgressDialog.setTitle("Android Basic JSoup Tutorial");
-            mProgressDialog.setMessage("Loading...");
-            mProgressDialog.setIndeterminate(false);
-            mProgressDialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            hotSpots = WaterBody.fromWildlife();
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            if(hotSpots != null) {
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                        android.R.layout.simple_list_item_1, WaterBody.toStringArray(hotSpots));
-                listview.setAdapter(adapter);
-            }
-            mProgressDialog.dismiss();
-        }
-    }
 }

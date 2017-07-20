@@ -5,8 +5,8 @@ ext {
         applicationId    : "com.loganfreeman.utahfishing",
         minSdkVersion    : 19, // Android 4.4 Kitkat
         targetSdkVersion : 25,
-        versionCode      : 40,
-        versionName      : "2.4",
+        versionCode      : 41,
+        versionName      : "2.5",
         resConfigs       : "zh",
         supportLibraryVersion : "25.1.0"
     ]

@@ -1,5 +1,6 @@
 package com.loganfreeman.utahfishing.modules.main.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -48,6 +49,8 @@ public class StockReportFragment extends AbstractBaseFragment {
 
     SimpleAdapter simpleRecyclerViewAdapter = null;
 
+    ProgressDialog progress;
+
     @Override
     protected void lazyLoad() {
 
@@ -60,7 +63,9 @@ public class StockReportFragment extends AbstractBaseFragment {
                 break;
             case R.id.action_filter:
                 //ReportFilterActivity.start(getActivity(), adapter.getFilter());
-                startActivityForResult(ReportFilterActivity.getIntent(getActivity(), simpleRecyclerViewAdapter.getFilter()), RESULT_CODE);
+                if(simpleRecyclerViewAdapter != null) {
+                    startActivityForResult(ReportFilterActivity.getIntent(getActivity(), simpleRecyclerViewAdapter.getFilter()), RESULT_CODE);
+                }
                 break;
             default:
                 break;
@@ -71,7 +76,7 @@ public class StockReportFragment extends AbstractBaseFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if( requestCode == RESULT_CODE ) {
+        if( requestCode == RESULT_CODE && data != null) {
             String filter = data.getStringExtra("MESSAGE");
             StockReportListActivity.start(getActivity(), simpleRecyclerViewAdapter.filterByCounty(filter));
         }
@@ -135,9 +140,25 @@ public class StockReportFragment extends AbstractBaseFragment {
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
 
         ultimateRecyclerView.setAdapter(simpleRecyclerViewAdapter);
+
+        dismissLoading();
+    }
+
+    private void showLoading() {
+        progress = new ProgressDialog(this.getActivity());
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+        progress.show();
+    }
+
+    private void dismissLoading() {
+        progress.dismiss();
+        progress = null;
     }
 
     private void load() {
+        showLoading();
         StockReport.getStockReportAsync().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<StockReport>>() {
